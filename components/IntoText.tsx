@@ -13,9 +13,10 @@ export default function IntroText(props: IntroTextProps) {
     const direction = isLeft ? 1000 : -1000;
     const flexType = isLeft ? "flex-row-reverse" : "flex-row";
 
+
     const trail = useTrail(text.length, {
         from: { x: direction },
-        to: { x: 0 },
+        to: { x: 0 }
     })
 
     return (

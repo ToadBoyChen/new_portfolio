@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useSpring, animated, to } from "@react-spring/web";
 
-import IntroText from "./IntoText";
-
 interface MenuEntryProps {
     text: string;
     link: string;
@@ -21,7 +19,7 @@ export default function MenuEntry(props: MenuEntryProps) {
         const rect = e.currentTarget.getBoundingClientRect();
         
         const xPos = ((e.clientX - rect.left) / rect.width) * 100;
-        const yPos = ((e.clientY - rect.top) / rect.height) * 20;
+        const yPos = 5 + ((e.clientY - rect.top) / rect.height) * 5;
 
         underlineApi.start({ x: xPos, y: yPos });
     };
@@ -40,10 +38,7 @@ export default function MenuEntry(props: MenuEntryProps) {
                 href={props.link}
                 className="text-5xl font-black tracking-wide"
             >
-                <IntroText
-                    text={props.text}
-                    direction="right"
-                />
+                {props.text}
             </Link>
             <svg
                 className="w-full pointer-events-none overflow-visible -translate-y-8 sm:-translate-y-12"
@@ -52,7 +47,7 @@ export default function MenuEntry(props: MenuEntryProps) {
                 <animated.path
                     fill="none"
                     stroke="black"
-                    strokeWidth="1"
+                    strokeWidth="0.5"
                     d={to([x,y], (mx, my) => `M 0 10 Q ${mx} ${my} 100 10`)}
                 />
             </svg>
