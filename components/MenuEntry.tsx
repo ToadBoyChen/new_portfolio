@@ -24,7 +24,7 @@ export default function MenuEntry(props: MenuEntryProps) {
 
     return (
         <div
-            className="text-7xl sm:text-8xl md:text-9xl lg:text-[150px] border-b-2 font-black tracking-wide"
+            className="text-5xl border-b-2 font-black tracking-wide"
         >
             <animated.div
                 onMouseEnter={menuEntry_enter}
