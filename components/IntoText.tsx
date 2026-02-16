@@ -20,7 +20,7 @@ export default function IntroText(props: IntroTextProps) {
 
     return (
         <div className="w-full pointer-events-none">
-            <h1 className={`${flexType} w-full flex text-[15vh] md:text-[20vh] font-black leading-none text-stone-200 tracking-widest md:tracking-[5vw] lg:tracking-[10vw] justify-center`}>
+            <h1 className={`${flexType} w-full flex`}>
                 {trail.map((style, index) => (
                     <animated.span
                         style={style}

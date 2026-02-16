@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useSpring, animated, to } from "@react-spring/web";
 
+import IntroText from "./IntoText";
+
 interface MenuEntryProps {
     text: string;
     link: string;
@@ -38,7 +40,10 @@ export default function MenuEntry(props: MenuEntryProps) {
                 href={props.link}
                 className="text-5xl font-black tracking-wide"
             >
-                {props.text}
+                <IntroText
+                    text={props.text}
+                    direction="right"
+                />
             </Link>
             <svg
                 className="w-full pointer-events-none overflow-visible -translate-y-8 sm:-translate-y-12"
