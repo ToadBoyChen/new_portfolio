@@ -37,12 +37,21 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
 
     return (
         <div
-            className={`relative border-b overflow-hidden`}
+            className={`relative border-b overflow-hidden my-4 hover:text-white transition-colors duration-300`}
 
             onMouseEnter={() => svgApi.start({ svgY: "0%", bgY: "0%" })}
             onMouseLeave={() => svgApi.start({ svgY: "100%", bgY: "100%" })}
         >
-            <div className="flex flex-row justify-around">
+            <animated.div 
+                className="absolute left-0 top-0 w-full h-full rounded-t-4xl z-0 border-2 border-black"
+                style={{ 
+                    y: bgY, 
+                    backgroundColor: props.colour 
+                }}
+            />
+            <div 
+                className="flex flex-row justify-around z-10 relative"    
+            >
                 <Link
                     className=" px-8 py-4 text-xl tracking-wider w-2/3"
                     href={props.link}
