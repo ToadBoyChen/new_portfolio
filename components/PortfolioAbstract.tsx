@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import IntroText from "./IntoText";
-import { useSpring, animated } from "@react-spring/web";
-import { useState } from "react";
+import { animated, to, useSprings } from "@react-spring/web";
+import { useEffect, useState } from "react";
+import { off } from "process";
 
 interface PortfolioAbstractProps {
     name: string;
@@ -18,18 +19,34 @@ interface PortfolioAbstractProps {
 }
 
 export default function PortfolioAbstract(props: PortfolioAbstractProps) {
-    const [imageFocus, imageFocusApi] = useSpring(() => ({
-        x: 10,
-        y: 10,
-        opacity: 1,
-        scale: 1.05,
-    }));
+    const width = 300;
+    const gap = 40;
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    const getSprings = (i: number) => {
+        const offset = i - currentImageIndex;
+        const absOffset = Math.abs(offset);
+
+        return {
+            x: offset * (width + gap),
+            scale: 1 - absOffset * 0.2,
+            zIndex: props.content.length - absOffset,
+            opacity: absOffset === 0 ? 1 : 0.8,
+            display: 'block',
+            immediate: (key: string) => key === "zIndex",
+        };
+    };
+
+    const [springs, api] = useSprings(props.content.length, (i) => getSprings(i));
+
+    useEffect(() => {
+        api.start((i) => getSprings(i));
+    }, [currentImageIndex, api]);
+
     const handlePreviousClick = () => {
         setCurrentImageIndex(
-            currentImageIndex === 0 ? props.content.length -1 : currentImageIndex - 1
+            currentImageIndex === 0 ? props.content.length - 1 : currentImageIndex - 1
         );
     };
 
@@ -78,26 +95,37 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         {`Content from ${props.name}`}
                     </p>
                     <div className="flex flex-row justify-center gap-16 py-8">
-                        {props.content.map((image, index) => (
-                            <img
-                                key={index}
-                                src={image}
-                                width={400}
-                                height={400}
-                                alt={`${props.name} photo`}
-                                className={currentImageIndex === index ? 'block' : 'hidden'}
-                            />
+                        {springs.map(({ x, scale, zIndex, opacity }, i) => (
+                            <animated.div
+                                key={i}
+                                className="absolute shadow-2xl rounded-lg bg-white"
+                                style={{
+                                    zIndex,
+                                    opacity,
+                                    width: '350px',
+                                    height: '350px',
+                                    transform: to([x, scale], (x, s) => `translate3d(${x}px,0,0) scale(${s})`),
+                                }}
+                            >
+                                <img
+                                    src={props.content[i]}
+                                    alt={`${props.name} photo ${i}`}
+                                    className="w-full h-full object-cover rounded-lg pointer-events-none"
+                                />
+                            </animated.div>
                         ))}
                     </div>
                     <div className="w-full absolute top-3/4 flex flex-row justify-between text-5xl font-black">
                         <button
-                            onClick={handlePreviousClick}    
+                            onClick={handlePreviousClick}
+                            className="bg-white"
                         >
                             {`<`}
                         </button>
 
                         <button
                             onClick={handleNextClick}
+                            className="bg-white"
                         >
                             {`>`}
                         </button>
