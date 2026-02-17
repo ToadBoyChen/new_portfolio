@@ -12,7 +12,7 @@ export default function Page() {
                 stack={["Figma", "Social Media", "React Native"]}
                 links={{"Landing Page": "https://capycalmweb.appwrite.network/", "Landing Page 2": "https://capycalmweb.appwrite.network/"}}
                 color="oklch(63.7% 0.237 25.331)"
-                content={["/capycalm_banner.png", "/capycalm_banner.png", "/capycalm_banner.png", "/capycalm_banner.png"]}
+                content={["/capycalm_banner.png", "/pfp.jpeg"]}
             />
         </section>
     );
