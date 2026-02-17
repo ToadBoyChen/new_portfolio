@@ -5,7 +5,7 @@ export default function Home() {
 
     return (
         <main 
-            className="flex flex-col relative h-screen w-screen items-center">
+            className="flex flex-col relative h-screen w-screen items-center overflow-x-hidden">
             <div className="w-full flex text-[15vh] md:text-[20vh] font-black leading-none text-stone-200">
                 <IntroText
                     text="TOBY"

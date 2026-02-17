@@ -19,7 +19,7 @@ export default function TransitionWrapper( { children }: { children: React.React
             {transitions((style, item) => (
                 <animated.div
                     style={style}
-                    className="fixed inset-0 w-screen h-screen overflow-hidden z-10"
+                    className="fixed inset-0 w-screen h-screen overflow-auto z-10"
                 >
                     {item}
                 </animated.div>

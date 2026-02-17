@@ -12,15 +12,17 @@ const svgs: { [key: string]: React.ElementType } = {
 interface PortfolioEntryProps {
     text: string,
     image: string,
-    link: string
+    colour: string,
+    link: string,
 }
 
 export default function PortfolioEntry(props: PortfolioEntryProps) {
-    const [y, svgApi] = useSpring(() => ({
-        y: "100%",
+    const [{ svgY, bgY }, svgApi] = useSpring(() => ({
+        svgY: "100%",
+        bgY: "100%",
     }));
 
-    // Calculates random rotations based on the portfolio entry text
+    // Calculates random rotations and x displacements based on the portfolio entry text
     let hash = 5381;
     for (let i = 0; i < props.text.length; i++) {
         hash = (hash * 33) ^ props.text.charCodeAt(i);
@@ -34,29 +36,31 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
     const SvgComponent = svgs[props.image]
 
     return (
-        <div 
-            className="relative flex flex-row justify-around border-b overflow-hidden"
+        <div
+            className={`relative border-b overflow-hidden`}
 
-            onMouseEnter={() => svgApi.start({ y: "0%" })}    
-            onMouseLeave={() => svgApi.start({ y: "100%" })}
+            onMouseEnter={() => svgApi.start({ svgY: "0%", bgY: "0%" })}
+            onMouseLeave={() => svgApi.start({ svgY: "100%", bgY: "100%" })}
         >
-            <Link
-                className="text-xl tracking-wider w-2/3"
-                href={props.link}
-            >
-                {props.text}
-            </Link>
+            <div className="flex flex-row justify-around">
+                <Link
+                    className=" px-8 py-4 text-xl tracking-wider w-2/3"
+                    href={props.link}
+                >
+                    {props.text}
+                </Link>
 
-            {/* SVG container starts translate below its div (overflow is hidden) */}
-            <animated.div 
-                className="translate-y-0 w-1/3"
-                style={y}
-            >
-                <SvgComponent
-                    className="w-15 h-15"
-                    style={{ transform: `rotate(${rotateVal}deg) translateX(${moveXVal}px)` }}
-                />
-            </animated.div>
+                {/* SVG container starts translate below its div (overflow is hidden) */}
+                <animated.div
+                    className="translate-y-0 w-1/3"
+                    style={{ y: svgY}}
+                >
+                    <SvgComponent
+                        className="w-15 h-15"
+                        style={{ transform: `rotate(${rotateVal}deg) translateX(${moveXVal}px)` }}
+                    />
+                </animated.div>
+            </div>
         </div>
     );
 }
