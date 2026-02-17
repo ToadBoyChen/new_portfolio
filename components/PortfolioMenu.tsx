@@ -13,7 +13,7 @@ export default function PortfolioMenu() {
                         text="CapyCalm"
                         image="capy"
                         colour="hover:bg-red-500"
-                        link="/thing-one"
+                        link="/portfolio/capycalm"
                     />
                 </li>
             </ul>
@@ -26,7 +26,7 @@ export default function PortfolioMenu() {
                         text="Inventory Game"
                         image="capy"
                         colour="hover:bg-green-500"
-                        link="/thing-one"
+                        link="/portfolio/inventory-game"
                     />
                 </li>
             </ul>
@@ -39,7 +39,7 @@ export default function PortfolioMenu() {
                         text="Portfolio V3"
                         image="capy"
                         colour="hover:bg-blue-500"
-                        link="/thing-one"
+                        link="/portfolio/portfolio-3"
                     />
                 </li>
                 <li>
@@ -47,7 +47,7 @@ export default function PortfolioMenu() {
                         text="Portfolio V2"
                         image="capy"
                         colour="hover:bg-purple-500"
-                        link="/thing-one"
+                        link="/portfolio/portfolio-2"
                     />
                 </li>
                 <li>
@@ -55,7 +55,7 @@ export default function PortfolioMenu() {
                         text="Portfolio V1"
                         image="capy"
                         colour="hover:bg-yellow-500"
-                        link="/thing-one"
+                        link="/portfolio/portfolio-1"
                     />
                 </li>
             </ul>
