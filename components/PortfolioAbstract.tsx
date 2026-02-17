@@ -9,16 +9,18 @@ interface PortfolioAbstractProps {
     stack: string[];
     links: Record<string, string>;
     bannerImage: string;
+    content: string[];
     color: string;
 }
 
 export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     return (
-        <section>
+        <section className="">
+            {/* <div className="h-0 lg:h-32 lg:border-b"/> */}
             <div className="relative border-b">
-                <div className="text-7xl md:text-8xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest absolute top-0 left-1/2 -translate-x-1/2">
+                <div className="text-7xl md:text-8xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest absolute top-0 lg:top-1/2 lg:-translate-y-1/2 left-1/2 -translate-x-1/2">
                     <IntroText
-                        text="CapyCalm"
+                        text={props.name}
                         direction="left"
                         spacing={false}
                     />
@@ -26,17 +28,36 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 <img
                     src={props.bannerImage}
                     alt={`${props.name} banner`}
-                    className="w-full object-cover"
+                    className="w-full object-cover object-top max-h-100 lg:max-h-70"
                 />
                 <p className="absolute bottom-2 left-8 tracking-wider">
                     {props.date}
                 </p>
             </div>
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center">
-                <div className="">
+            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center leading-relaxed text-lg">
+
+                <div className="w-full">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                        {"Description"}
+                    </p>
                     {props.description.map((para, i) => (
-                        <p key={i}>{para}</p>
+                        <p
+                            key={i}
+                        >
+                            {para}
+                        </p>
                     ))}
+                </div>
+
+                <div className="w-full">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                        {`Content from ${props.name}`}
+                    </p>
+                    <img
+                        src={props.bannerImage}
+                        alt={`${props.name} banner`}
+                        className="w-full object-cover"
+                    />
                 </div>
 
                 <div className="w-full">
