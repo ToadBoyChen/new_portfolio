@@ -11,7 +11,7 @@ export default function TransitionWrapper( { children }: { children: React.React
         from: { opacity: 0, y: '50%' },
         enter: { opacity: 1, y: '0%' },
         leave: { opacity: 0, y: '-50%' },
-        config: { tension: 200, friction: 20 },
+        config: { tension: 150, friction: 20, mass: 1 },
     });
 
     return (
