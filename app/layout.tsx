@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import TransitionWrapper from "@/components/TransitionWrapper";
 import "./globals.css";
 
+import CustomCursor from "@/components/CustomCursor";
+import { CursorProvider } from "@/context/CursorContext";
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -28,9 +31,12 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <TransitionWrapper>
-                    {children}
-                </TransitionWrapper>
+                <CursorProvider>
+                    <CustomCursor />
+                    <TransitionWrapper>
+                        {children}
+                    </TransitionWrapper>
+                </CursorProvider>
             </body>
         </html>
     );

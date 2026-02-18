@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import IntroText from "./IntoText";
 import { animated, to, useSprings } from "@react-spring/web";
-import { useEffect, useState } from "react";
-import { off } from "process";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { useCursor } from "@/context/CursorContext";
 
 interface PortfolioAbstractProps {
     name: string;
@@ -22,10 +22,15 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const width = 300;
     const gap = 40;
 
+    const { getHoverProps, resetCursor, cursorVariant } = useCursor();
+
+    const touchStartX = useRef<number | null>(null);
+    const touchEndX = useRef<number | null>(null);
+
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const getSprings = (i: number) => {
-        const offset = i - currentImageIndex;
+    const calculateSprings = useCallback((i: number, activeIndex: number) => {
+        const offset = i - activeIndex;
         const absOffset = Math.abs(offset);
 
         return {
@@ -36,24 +41,70 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
             display: 'block',
             immediate: (key: string) => key === "zIndex",
         };
-    };
+    }, [props.content.length]);
 
-    const [springs, api] = useSprings(props.content.length, (i) => getSprings(i));
+    const [springs, api] = useSprings(props.content.length, (i) => ({ ...calculateSprings(i, 0), }));
 
     useEffect(() => {
-        api.start((i) => getSprings(i));
-    }, [currentImageIndex, api]);
+        api.start((i) => calculateSprings(i, currentImageIndex));
+    }, [currentImageIndex, api, calculateSprings]);
 
     const handlePreviousClick = () => {
-        setCurrentImageIndex(
-            currentImageIndex === 0 ? props.content.length - 1 : currentImageIndex - 1
+        setCurrentImageIndex((prev) =>
+            prev === 0 ? props.content.length - 1 : prev - 1
         );
     };
 
     const handleNextClick = () => {
-        setCurrentImageIndex(
-            (currentImageIndex + 1) % props.content.length
+        setCurrentImageIndex((prev) =>
+            (prev + 1) % props.content.length
         );
+    };
+
+    const handleContainerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const isLeft = x < rect.width / 2;
+
+        const { onMouseEnter } = getHoverProps(isLeft ? "PREV" : "NEXT");
+        onMouseEnter();
+    };
+
+    const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const isLeft = x < rect.width / 2;
+
+        if (isLeft) {
+            handlePreviousClick();
+        } else {
+            handleNextClick();
+        }
+    };
+
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        touchEndX.current = null;
+        touchStartX.current = e.targetTouches[0].clientX;
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+
+        const distance = touchStartX.current - touchEndX.current;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) {
+            handleNextClick();
+        } else if (isRightSwipe) {
+            handlePreviousClick();
+        }
     };
 
     return (
@@ -75,30 +126,38 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     {props.date}
                 </p>
             </div>
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center leading-relaxed text-lg">
 
+            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center leading-relaxed text-lg">
                 <div className="w-full">
                     <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
                         {"Description"}
                     </p>
                     {props.description.map((para, i) => (
-                        <p
-                            key={i}
-                        >
-                            {para}
-                        </p>
+                        <p key={i}>{para}</p>
                     ))}
                 </div>
 
-                <div className="w-full h-full relative">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                <div className="w-full relative flex flex-col items-center">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
                         {`Content from ${props.name}`}
                     </p>
-                    <div className="flex flex-row justify-center gap-16 py-8">
+                    <div
+                        className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y"
+
+                        // Desktop Interaction
+                        onMouseMove={handleContainerMouseMove}
+                        onMouseLeave={resetCursor}
+                        onClick={handleContainerClick}
+
+                        // Mobile Interaction
+                        onTouchStart={onTouchStart}
+                        onTouchMove={onTouchMove}
+                        onTouchEnd={onTouchEnd}
+                    >
                         {springs.map(({ x, scale, zIndex, opacity }, i) => (
                             <animated.div
                                 key={i}
-                                className="absolute shadow-2xl rounded-lg bg-white"
+                                className="absolute shadow-2xl rounded-lg pointer-events-none"
                                 style={{
                                     zIndex,
                                     opacity,
@@ -110,25 +169,13 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                                 <img
                                     src={props.content[i]}
                                     alt={`${props.name} photo ${i}`}
-                                    className="w-full h-full object-cover rounded-lg pointer-events-none"
+                                    className="w-full h-full object-cover rounded-lg"
                                 />
                             </animated.div>
                         ))}
                     </div>
-                    <div className="w-full absolute top-3/4 flex flex-row justify-between text-5xl font-black">
-                        <button
-                            onClick={handlePreviousClick}
-                            className="bg-white"
-                        >
-                            {`<`}
-                        </button>
-
-                        <button
-                            onClick={handleNextClick}
-                            className="bg-white"
-                        >
-                            {`>`}
-                        </button>
+                    <div className="w-full text-center mt-4 text-xs text-gray-400 uppercase tracking-widest md:hidden">
+                        Swipe to navigate
                     </div>
                 </div>
 
@@ -136,12 +183,9 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
                         {"Roles"}
                     </p>
-
                     <ul>
                         {props.roles.map((role) => (
-                            <li key={role}>
-                                {role}
-                            </li>
+                            <li key={role}>{role}</li>
                         ))}
                     </ul>
                 </div>
@@ -150,17 +194,13 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
                         {"Tech + Skill Stack"}
                     </p>
-
                     <ul>
                         {props.stack.map((tech) => (
-                            <li key={tech}>
-                                {tech}
-                            </li>
+                            <li key={tech}>{tech}</li>
                         ))}
                     </ul>
                 </div>
 
-                {/* Links */}
                 <div className="w-full pb-32">
                     <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
                         {"Links"}
