@@ -3,7 +3,7 @@
 import Link from "next/link";
 import IntroText from "./IntoText";
 import { animated, to, useSprings } from "@react-spring/web";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useCursor } from "@/context/CursorContext";
 
 interface PortfolioAbstractProps {
@@ -14,7 +14,7 @@ interface PortfolioAbstractProps {
     stack: string[];
     links: Record<string, string>;
     bannerImage: string;
-    content: string[];
+    content: Record<string, string>;
     color: string;
 }
 
@@ -22,12 +22,14 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const width = 300;
     const gap = 40;
 
-    const { getHoverProps, resetCursor, cursorVariant } = useCursor();
+    const { getHoverProps, resetCursor } = useCursor();
 
     const touchStartX = useRef<number | null>(null);
     const touchEndX = useRef<number | null>(null);
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const photoAlbumLength = Object.entries(props.content).length;
 
     const calculateSprings = useCallback((i: number, activeIndex: number) => {
         const offset = i - activeIndex;
@@ -36,28 +38,38 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
         return {
             x: offset * (width + gap),
             scale: 1 - absOffset * 0.2,
-            zIndex: props.content.length - absOffset,
+            zIndex: photoAlbumLength - absOffset,
             opacity: absOffset === 0 ? 1 : 0.8,
             display: 'block',
-            immediate: (key: string) => key === "zIndex",
         };
-    }, [props.content.length]);
+    }, [photoAlbumLength]);
 
-    const [springs, api] = useSprings(props.content.length, (i) => ({ ...calculateSprings(i, 0), }));
+    const [textSprings] = useSprings(
+        photoAlbumLength,
+        (i) => ({
+            opacity: i === currentImageIndex ? 1 : 0,
+            y: i === currentImageIndex ? 0 : 80,
+        }),
+        [currentImageIndex]
+    );
 
-    useEffect(() => {
-        api.start((i) => calculateSprings(i, currentImageIndex));
-    }, [currentImageIndex, api, calculateSprings]);
+    const [springs] = useSprings(
+        photoAlbumLength,
+        (i) => ({
+            ...calculateSprings(i, currentImageIndex),
+        }),
+        [currentImageIndex, calculateSprings]
+    );
 
     const handlePreviousClick = () => {
         setCurrentImageIndex((prev) =>
-            prev === 0 ? props.content.length - 1 : prev - 1
+            prev === 0 ? photoAlbumLength - 1 : prev - 1
         );
     };
 
     const handleNextClick = () => {
         setCurrentImageIndex((prev) =>
-            (prev + 1) % props.content.length
+            (prev + 1) % photoAlbumLength
         );
     };
 
@@ -142,7 +154,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         {`Content from ${props.name}`}
                     </p>
                     <div
-                        className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y"
+                        className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y select-none"
 
                         // Desktop Interaction
                         onMouseMove={handleContainerMouseMove}
@@ -167,11 +179,25 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                                 }}
                             >
                                 <img
-                                    src={props.content[i]}
+                                    src={Object.entries(props.content)[i][1]}
                                     alt={`${props.name} photo ${i}`}
                                     className="w-full h-full object-cover rounded-lg"
                                 />
                             </animated.div>
+                        ))}
+                    </div>
+                    <div className="mb-32 relative w-full flex justify-center">
+                        {textSprings.map(({ opacity, y }, i) => (
+                            <animated.p
+                                key={i}
+                                className="absolute text-center text-xs tracking-wider"
+                                style={{
+                                    opacity,
+                                    transform: y.to(v => `translate3d(0, ${v}px, 0)`),
+                                }}
+                            >
+                                {Object.entries(props.content)[i][0]}
+                            </animated.p>
                         ))}
                     </div>
                     <div className="w-full text-center mt-4 text-xs text-gray-400 uppercase tracking-widest md:hidden">
