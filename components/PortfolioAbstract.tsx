@@ -20,7 +20,7 @@ interface PortfolioAbstractProps {
 }
 
 export default function PortfolioAbstract(props: PortfolioAbstractProps) {
-    const width = 300;
+    const width = 400;
     const gap = 40;
 
     const { getHoverProps } = useCursor();
@@ -28,9 +28,9 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const touchStartX = useRef<number | null>(null);
     const touchEndX = useRef<number | null>(null);
 
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
     const photoAlbumLength = Object.entries(props.content).length;
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(Math.floor(photoAlbumLength / 2));
 
     const calculateSprings = useCallback((i: number, activeIndex: number) => {
         const offset = i - activeIndex;
@@ -38,9 +38,9 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
         return {
             x: offset * (width + gap),
-            scale: 1 - absOffset * 0.2,
+            scale: 1 - absOffset * 0.3,
             zIndex: photoAlbumLength - absOffset,
-            opacity: absOffset === 0 ? 1 : 0.8,
+            opacity: absOffset === 0 ? 1 : 0.7,
             display: 'block',
         };
     }, [photoAlbumLength]);
