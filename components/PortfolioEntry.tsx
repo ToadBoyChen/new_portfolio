@@ -3,6 +3,7 @@
 import { useSpring, animated } from "@react-spring/web"
 import Link from "next/link";
 
+import MenuEntry from "./MenuEntry";
 import Capy from "./svgs/Capy";
 
 const svgs: { [key: string]: React.ElementType } = {

@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSpring, animated, to, config } from "@react-spring/web";
 import { useCursor } from "@/context/CursorContext";
 
 export default function CustomCursor() {
   const { cursorText, cursorVariant, cursorColor } = useCursor();
   const isText = cursorVariant === "text";
+
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const [{ x, y, scale }, api] = useSpring(() => ({
     x: 0,
@@ -23,7 +25,16 @@ export default function CustomCursor() {
   });
 
   useEffect(() => {
+    const handleTouchStart = () => {
+      setIsTouchDevice(true);
+    };
+
     const handleMove = (e: MouseEvent) => {
+      if (isTouchDevice) {
+        setIsTouchDevice(false);
+      }
+
+      if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
       api.start({ x: e.clientX, y: e.clientY });
     };
 
@@ -36,14 +47,18 @@ export default function CustomCursor() {
       });
     };
 
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("mousemove", handleMove);
     window.addEventListener("mousedown", handleMouseDown);
 
     return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [api]);
+  }, [api, isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   return (
     <animated.div

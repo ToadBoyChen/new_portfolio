@@ -5,12 +5,13 @@ import IntroText from "./IntoText";
 import { animated, to, useSprings } from "@react-spring/web";
 import { useState, useRef, useCallback } from "react";
 import { useCursor } from "@/context/CursorContext";
+import PortfolioAbstractEntry from "./PortfolioAbstractEntry";
 
 interface PortfolioAbstractProps {
     name: string;
     description: string[];
     date: string;
-    roles: string[];
+    roles: Record<string, number>;
     stack: string[];
     links: Record<string, string>;
     bannerImage: string;
@@ -22,7 +23,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const width = 300;
     const gap = 40;
 
-    const { getHoverProps, resetCursor } = useCursor();
+    const { getHoverProps } = useCursor();
 
     const touchStartX = useRef<number | null>(null);
     const touchEndX = useRef<number | null>(null);
@@ -73,15 +74,6 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
         );
     };
 
-    const handleContainerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const isLeft = x < rect.width / 2;
-
-        const { onMouseEnter } = getHoverProps(isLeft ? "PREV" : "NEXT");
-        onMouseEnter();
-    };
-
     const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -122,7 +114,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     return (
         <section>
             <div className="relative border-b">
-                <div className="text-7xl md:text-8xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest absolute top-0 lg:top-1/2 lg:-translate-y-1/2 left-1/2 -translate-x-1/2">
+                <div className="z-10 text-white mix-blend-difference text-7xl md:text-8xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
                     <IntroText
                         text={props.name}
                         direction="left"
@@ -141,11 +133,15 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
             <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center leading-relaxed text-lg">
                 <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
                         {"Description"}
                     </p>
                     {props.description.map((para, i) => (
-                        <p key={i}>{para}</p>
+                        <p 
+                            key={i}
+                        >
+                            {para}
+                        </p>
                     ))}
                 </div>
 
@@ -157,8 +153,6 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y select-none"
 
                         // Desktop Interaction
-                        onMouseMove={handleContainerMouseMove}
-                        onMouseLeave={resetCursor}
                         onClick={handleContainerClick}
 
                         // Mobile Interaction
@@ -166,6 +160,14 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
                     >
+                        <div
+                            className="w-1/2 absolute left-0 top-0 h-full"
+                            {...getHoverProps("Prev")}
+                        />
+                        <div
+                            className="w-1/2 absolute right-0 top-0 h-full"
+                            {...getHoverProps("Next")}
+                        />
                         {springs.map(({ x, scale, zIndex, opacity }, i) => (
                             <animated.div
                                 key={i}
@@ -206,37 +208,65 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
 
                 <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
                         {"Roles"}
                     </p>
-                    <ul>
-                        {props.roles.map((role) => (
-                            <li key={role}>{role}</li>
+                    <ul className="flex flex-col gap-4 w-full">
+                        {Object.entries(props.roles).map(([role, percent]) => (
+                            <li
+                                key={role}
+                                className="relative w-full h-12 border rounded overflow-hidden"
+                            >
+                                <div
+                                    className=
+                                    {`absolute top-0 left-0 h-full transition-all duration-1000 ease-out z-0 ${props.color}`}
+                                    style={{
+                                        width: `${percent}%`
+                                    }}
+                                />
+                                <div className="relative z-10 w-full h-full flex justify-between items-center px-4">
+                                    <span className="uppercase tracking-wider text-sm font-bold">
+                                        {role}
+                                    </span>
+                                    <span className="font-mono text-sm">
+                                        {percent}%
+                                    </span>
+                                </div>
+                            </li>
                         ))}
                     </ul>
                 </div>
 
                 <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
                         {"Tech + Skill Stack"}
                     </p>
-                    <ul>
-                        {props.stack.map((tech) => (
-                            <li key={tech}>{tech}</li>
+                    <ul className="grid grid-cols-3 gap-6">
+                        {props.stack.map((tech, i) => (
+                            <li
+                                key={i}
+                                className="tracking-tighter sm:tracking-tight md:tracking-normal lg:tracking-wider"
+                            >
+                                <span className="text-xs">{i + 1}.</span> {tech}
+                            </li>
                         ))}
                     </ul>
                 </div>
 
                 <div className="w-full pb-32">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center">
+                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
                         {"Links"}
                     </p>
-                    <ul>
+                    <ul className="flex flex-col gap-6">
                         {Object.entries(props.links).map(([label, url]) => (
-                            <li key={label}>
-                                <Link href={url} target="_blank" rel="noreferrer">
-                                    {label}
-                                </Link>
+                            <li
+                                key={label}
+                                {...getHoverProps("GO TO")}
+                            >
+                                <PortfolioAbstractEntry 
+                                    link={url}
+                                    text={label}
+                                />
                             </li>
                         ))}
                     </ul>
