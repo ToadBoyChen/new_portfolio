@@ -1,84 +1,72 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSpring, animated, to, config } from "@react-spring/web";
+import { useEffect, useRef, useState } from "react";
 import { useCursor } from "@/context/CursorContext";
-import { propagateServerField } from "next/dist/server/lib/render-server";
 
 export default function CustomCursor() {
   const { cursorText, cursorVariant, cursorColor } = useCursor();
   const isText = cursorVariant === "text";
 
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  const [{ x, y, scale }, api] = useSpring(() => ({
-    x: 0,
-    y: 0,
-    scale: 1,
-    config: { mass: 1, tension: 1200, friction: 50 },
-  }));
-
-  const visualStyles = useSpring({
-    width: isText ? 100 : 16,
-    height: isText ? 100 : 16,
-    config: { tension: 300, friction: 30 },
-  });
+  
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
-    const handleTouchStart = () => {
-      setIsTouchDevice(true);
-    };
+    const handleTouchStart = () => setIsTouchDevice(true);
 
     const handleMove = (e: MouseEvent) => {
-      if (isTouchDevice) {
-        setIsTouchDevice(false);
+      if (!isVisible) setIsVisible(true);
+      
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
-
-      if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
-      api.start({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseDown = () => {
-      api.start({
-        to: async (next) => {
-          await next({ scale: 0.8, config: { duration: 100 } });
-          await next({ scale: 1, config: config.wobbly });
-        },
-      });
-    };
+    const handleMouseDown = () => setIsClicked(true);
+    const handleMouseUp = () => setIsClicked(false);
 
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("mousemove", handleMove);
     window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [api, isTouchDevice]);
+  }, [isVisible]);
 
   if (isTouchDevice) return null;
 
   return (
-    <animated.div
-      className={`fixed flex items-center justify-center rounded-full pointer-events-none z-9999 opacity-100 transition-colors duration-200 ${isText ? cursorColor : "bg-white"}`}
-      style={{
-        ...visualStyles,
-        mixBlendMode: isText ? "normal" : "difference",
-        transform: to(
-          [x, y, scale],
-          (x, y, s) => `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${s})`
-        ),
+    <div
+      ref={cursorRef}
+      className="fixed top-0 left-0 pointer-events-none z-9999"
+      style={{ 
+        opacity: isVisible ? 1 : 0,
+        mixBlendMode: isText ? "normal" : "difference" 
       }}
     >
-      {isText && (
-        <animated.span
-          className="text-[12px] uppercase font-black text-center leading-none select-none text-white mix-blend-difference "
-        >
-          {cursorText}
-        </animated.span>
-      )}
-    </animated.div>
+      <div
+        className={`flex items-center justify-center rounded-full transition-all duration-200 ease-out ${
+          isText ? cursorColor : "bg-white"
+        }`}
+        style={{
+          width: isText ? "100px" : "16px",
+          height: isText ? "100px" : "16px",
+          transform: `translate(-50%, -50%) scale(${isClicked ? 0.75 : 1})`,
+        }}
+      >
+        {isText && (
+          <span className="text-[12px] uppercase font-black text-center leading-none select-none text-white mix-blend-difference">
+            {cursorText}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
