@@ -2,7 +2,7 @@ import MenuEntry from "./MenuEntry";
 
 export default function Menu() {
     return (
-        <div className="min-w-sm sm:min-w-md md:min-w-xl lg:min-w-3xl h-[60vh] flex flex-col justify-center">
+        <div className="w-sm sm:w-md md:w-xl lg:w-3xl h-[60vh] flex flex-col justify-center">
             <p className="text-sm border-b tracking-widest mb-8 text-center">
                 {"Navigation"}
             </p>

@@ -3,8 +3,8 @@ import PortfolioEntry from "./PortfolioEntry";
 
 export default function PortfolioMenu() {
     return (
-        <div className="min-w-sm sm:min-w-md md:min-w-xl lg:min-w-3xl h-[60vh] flex flex-col justify-center">
-            <p className="text-sm border-b-2 font-semibold tracking-widest text-center">
+        <div className="w-sm sm:w-md md:w-xl lg:w-3xl flex flex-col justify-center">
+            <p className="text-sm border-b tracking-widest text-center">
                 {"Apps"}
             </p>
             <ul className="flex flex-col gap-8">
@@ -12,12 +12,12 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="CapyCalm"
                         image="capy"
-                        colour="oklch(63.7% 0.237 25.331)"
+                        colour="bg-indigo-400"
                         link="/portfolio/capycalm"
                     />
                 </li>
             </ul>
-            {/* <p className="text-sm border-b-2 font-semibold tracking-widest text-center mt-32">
+            <p className="text-sm border-b tracking-widest text-center mt-32">
                 {"Websites"}
             </p>
             <ul>
@@ -25,20 +25,20 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Inventory Game"
                         image="capy"
-                        colour="oklch(70.5% 0.213 47.604)"
+                        colour="bg-violet-400"
                         link="/portfolio/inventory-game"
                     />
                 </li>
-            </ul> */}
-            <p className="text-sm border-b-2 font-semibold tracking-widest text-center mt-32">
+            </ul>
+            <p className="text-sm border-b tracking-widest text-center mt-32">
                 {"Old Portfolios"}
             </p>
             <ul>
                 <li>
                     <PortfolioEntry
-                        text="Current Portfolio"
+                        text="Portfolio V4"
                         image="capy"
-                        colour="oklch(76.9% 0.188 70.08)"
+                        colour="bg-purple-400"
                         link="/portfolio/portfolio-4"
                     />
                 </li>
@@ -46,7 +46,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V3"
                         image="capy"
-                        colour="oklch(76.9% 0.188 70.08)"
+                        colour="bg-fuchsia-400"
                         link="/portfolio/portfolio-3"
                     />
                 </li>
@@ -54,7 +54,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V2"
                         image="capy"
-                        colour="oklch(79.5% 0.184 86.047)"
+                        colour="bg-pink-400"
                         link="/portfolio/portfolio-2"
                     />
                 </li>
@@ -62,7 +62,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V1"
                         image="capy"
-                        colour="oklch(76.8% 0.233 130.85)"
+                        colour="bg-rose-400"
                         link="/portfolio/portfolio-1"
                     />
                 </li>
