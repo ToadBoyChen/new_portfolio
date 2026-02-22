@@ -126,8 +126,8 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     alt={`${props.name} banner`}
                     className="w-full object-cover object-top max-h-100 lg:max-h-70"
                 />
-                <p className="absolute bottom-2 left-8 tracking-wider">
-                    {props.date}
+                <p className="absolute bottom-2 left-2 tracking-wider bg-black/10 px-4 py-2 rounded-4xl backdrop-blur-sm text-xs">
+                    <span className="text-white mix-blend-difference">{props.date}</span>
                 </p>
             </div>
 
@@ -135,13 +135,13 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
                     {"Description"}
                 </p>
-                <div className={`${props.color} p-8 rounded-4xl text-white mix-blend-difference`}>
+                <div className={`${props.color} p-8 rounded-4xl`}>
                     {props.description.map((para, i) => (
                         <p
                             key={i}
-                            className="leading-relaxed text-xl"
+                            className="leading-relaxed text-md md:text-lg text-white mix-blend-difference text-justify"
                         >
-                            {para}
+                            {para} <br /> <br />
                         </p>
                     ))}
                 </div>
@@ -193,7 +193,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         {textSprings.map(({ opacity, y }, i) => (
                             <animated.p
                                 key={i}
-                                className="absolute text-center text-sm tracking-wider leading-loose text-stone-600"
+                                className="absolute text-sm tracking-wider leading-loose text-stone-600 text-justify"
                                 style={{
                                     opacity,
                                     transform: y.to(v => `translate3d(0, ${v}px, 0)`),

@@ -12,7 +12,7 @@ export default function Page() {
                     "This website is pure vibecoding, using jQuery - which was for some reason a requirement for the job. I will never know why especially when we have other powerful frameworks."
                 ]}
                 
-                date="2023"
+                date="February 2024"
                 
                 bannerImage="/portfolio-v1/portfolio-v1_banner.png"
 
@@ -25,14 +25,15 @@ export default function Page() {
                 stack={[
                     "jQuery", 
                     "HTML",
-                    "javaScript"
+                    "JavaScript",
+                    "CSS",
                 ]}
                 
                 links={{
                     "Website": "https://old-website-eight.vercel.app/",
                 }}
 
-                color="bg-red-300"
+                color="bg-green-200"
                 
                 content={{
                     "Figure One: this is the welcome page. There isn't much to say other than I thought the blur effect was awesome. It couldn't fix this either way.": "/portfolio-v1/portfolio-v1-1.png", 

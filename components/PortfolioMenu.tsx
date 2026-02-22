@@ -38,7 +38,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V4"
                         image="capy"
-                        colour="bg-purple-400"
+                        colour="bg-yellow-400"
                         link="/portfolio/portfolio-4"
                     />
                 </li>
@@ -46,7 +46,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V3"
                         image="capy"
-                        colour="bg-fuchsia-400"
+                        colour="bg-rose-400"
                         link="/portfolio/portfolio-3"
                     />
                 </li>
@@ -54,7 +54,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V2"
                         image="capy"
-                        colour="bg-pink-400"
+                        colour="bg-fuchsia-400"
                         link="/portfolio/portfolio-2"
                     />
                 </li>
@@ -62,7 +62,7 @@ export default function PortfolioMenu() {
                     <PortfolioEntry
                         text="Portfolio V1"
                         image="capy"
-                        colour="bg-rose-400"
+                        colour="bg-green-400"
                         link="/portfolio/portfolio-1"
                     />
                 </li>

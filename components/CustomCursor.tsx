@@ -74,7 +74,7 @@ export default function CustomCursor() {
     >
       {isText && (
         <animated.span
-          className="text-[12px] uppercase font-black text-center leading-none select-none text-white mix-blend-color-difference"
+          className="text-[12px] uppercase font-black text-center leading-none select-none text-white mix-blend-difference "
         >
           {cursorText}
         </animated.span>
