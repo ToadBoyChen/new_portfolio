@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans } from 'next/font/google';
 import TransitionWrapper from "@/components/TransitionWrapper";
 import "./globals.css";
 
 import CustomCursor from "@/components/CustomCursor";
 import { CursorProvider } from "@/context/CursorContext";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
+const montserrat = IBM_Plex_Sans({
+    subsets: ['latin'],
+    variable: '--font-IBM_Plex_Sans',
+    weight: ["100", "200", "300", "400", "500", "600", "700"]
 });
 
 export const metadata: Metadata = {
@@ -29,7 +25,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${montserrat.className} antialiased`}
             >
                 <CursorProvider>
                     <CustomCursor />

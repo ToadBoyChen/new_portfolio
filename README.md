@@ -8,5 +8,4 @@
 1. Create breadcrumb and explicit navigation to keep user immersed,
 2. Create SVGs for all projects,
 3. Finish project content,
-4. fix white hover problem for the border because it disappears,
-5. Add an abstract coloured circles to the background that move in a parallaxed effect. Each page should have different circles?
+4. Add an abstract coloured circles to the background that move in a parallaxed effect. Each page should have different circles?

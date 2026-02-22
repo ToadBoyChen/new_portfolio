@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSpring, animated, to, config } from "@react-spring/web";
 import { useCursor } from "@/context/CursorContext";
+import { propagateServerField } from "next/dist/server/lib/render-server";
 
 export default function CustomCursor() {
   const { cursorText, cursorVariant, cursorColor } = useCursor();
@@ -20,7 +21,6 @@ export default function CustomCursor() {
   const visualStyles = useSpring({
     width: isText ? 100 : 16,
     height: isText ? 100 : 16,
-    backgroundColor: isText ? cursorColor : "#ffffff",
     config: { tension: 300, friction: 30 },
   });
 
@@ -62,7 +62,7 @@ export default function CustomCursor() {
 
   return (
     <animated.div
-      className="fixed top-0 left-0 flex items-center justify-center rounded-full pointer-events-none z-9999 opacity-100"
+      className={`fixed flex items-center justify-center rounded-full pointer-events-none z-9999 opacity-100 transition-colors duration-200 ${isText ? cursorColor : "bg-white"}`}
       style={{
         ...visualStyles,
         mixBlendMode: isText ? "normal" : "difference",
@@ -74,7 +74,7 @@ export default function CustomCursor() {
     >
       {isText && (
         <animated.span
-          className="text-[12px] uppercase font-black text-center leading-none select-none text-black"
+          className="text-[12px] uppercase font-black text-center leading-none select-none text-white mix-blend-color-difference"
         >
           {cursorText}
         </animated.span>

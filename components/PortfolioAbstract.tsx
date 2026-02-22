@@ -131,14 +131,15 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </p>
             </div>
 
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center leading-relaxed text-lg">
-                <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
-                        {"Description"}
-                    </p>
+            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center">
+                <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
+                    {"Description"}
+                </p>
+                <div className={`${props.color} p-8 rounded-4xl text-white mix-blend-difference`}>
                     {props.description.map((para, i) => (
-                        <p 
+                        <p
                             key={i}
+                            className="leading-relaxed text-xl"
                         >
                             {para}
                         </p>
@@ -146,7 +147,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
 
                 <div className="w-full relative flex flex-col items-center">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
+                    <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
                         {`Content from ${props.name}`}
                     </p>
                     <div
@@ -162,11 +163,11 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     >
                         <div
                             className="w-1/2 absolute left-0 top-0 h-full"
-                            {...getHoverProps("Prev")}
+                            {...getHoverProps("Prev", props.color)}
                         />
                         <div
                             className="w-1/2 absolute right-0 top-0 h-full"
-                            {...getHoverProps("Next")}
+                            {...getHoverProps("Next", props.color)}
                         />
                         {springs.map(({ x, scale, zIndex, opacity }, i) => (
                             <animated.div
@@ -192,7 +193,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         {textSprings.map(({ opacity, y }, i) => (
                             <animated.p
                                 key={i}
-                                className="absolute text-center text-xs tracking-wider"
+                                className="absolute text-center text-sm tracking-wider leading-loose text-stone-600"
                                 style={{
                                     opacity,
                                     transform: y.to(v => `translate3d(0, ${v}px, 0)`),
@@ -208,7 +209,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
 
                 <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
+                    <p className="pt-16 w-full text-sm border-b  tracking-widest text-center mb-8">
                         {"Roles"}
                     </p>
                     <ul className="flex flex-col gap-4 w-full">
@@ -225,12 +226,12 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                                     }}
                                 />
                                 <div className="relative z-10 w-full h-full flex justify-between items-center px-4">
-                                    <span className="uppercase tracking-wider text-sm font-bold">
+                                    <p className="tracking-widest">
                                         {role}
-                                    </span>
-                                    <span className="font-mono text-sm">
-                                        {percent}%
-                                    </span>
+                                    </p>
+                                    <p className="text-lg tracking-tighter">
+                                        {percent} <span className="text-xs">%</span>
+                                    </p>
                                 </div>
                             </li>
                         ))}
@@ -238,7 +239,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
 
                 <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
+                    <p className="pt-16 w-full text-sm border-b  tracking-widest text-center mb-8">
                         {"Tech + Skill Stack"}
                     </p>
                     <ul className="grid grid-cols-3 gap-6">
@@ -254,16 +255,16 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
 
                 <div className="w-full pb-32">
-                    <p className="pt-16 w-full text-sm border-b-2 font-semibold tracking-widest text-center mb-8">
+                    <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
                         {"Links"}
                     </p>
                     <ul className="flex flex-col gap-6">
                         {Object.entries(props.links).map(([label, url]) => (
                             <li
                                 key={label}
-                                {...getHoverProps("GO TO")}
+                                {...getHoverProps("Go To", props.color)}
                             >
-                                <PortfolioAbstractEntry 
+                                <PortfolioAbstractEntry
                                     link={url}
                                     text={label}
                                 />

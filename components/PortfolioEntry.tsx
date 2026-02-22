@@ -38,13 +38,13 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
 
     return (
         <div
-            className={`relative border-b overflow-hidden my-4 hover:text-white transition-colors duration-300`}
+            className={`relative border-b overflow-hidden my-4 hover:text-white hover:border-black transition-colors duration-300`}
 
             onMouseEnter={() => svgApi.start({ svgY: "0%", bgY: "0%" })}
             onMouseLeave={() => svgApi.start({ svgY: "100%", bgY: "100%" })}
         >
             <animated.div 
-                className="absolute left-0 top-0 w-full h-full rounded-t-4xl z-0 border-2 border-black"
+                className="absolute left-0 top-0 w-full h-full rounded-t-4xl z-0 border-t-3 border-r-3 border-l-3 border-b-2 border-black"
                 style={{ 
                     y: bgY, 
                     backgroundColor: props.colour 

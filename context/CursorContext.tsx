@@ -19,7 +19,7 @@ const CursorContext = createContext<CursorContextType | undefined>(undefined);
 export function CursorProvider({ children }: { children: React.ReactNode }) {
   const [cursorText, setCursorText] = useState("");
   const [cursorVariant, setCursorVariant] = useState<CursorVariant>("default");
-  const [cursorColor, setCursorColor] = useState("#7FE964"); 
+  const [cursorColor, setCursorColor] = useState("bg-lime-400"); 
 
   const resetCursor = useCallback(() => {
     setCursorVariant("default");

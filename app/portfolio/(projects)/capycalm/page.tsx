@@ -36,7 +36,7 @@ export default function Page() {
                     "Tiktok": "https://www.tiktok.com/@capycalmapp"
                 }}
 
-                color="bg-red-300"
+                color="bg-blue-300"
                 
                 content={{
                     "Figure One: This is the landing page displaying an informational page explaining why mindfulness and meditation is good.": "/capycalm/capycalm-1.png", 
