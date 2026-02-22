@@ -4,22 +4,23 @@ export default function Page() {
     return (
         <section className="overflow-x-hidden">
             <PortfolioAbstract
-                name="CapyCalm"
+                name="Portfolio V4"
                 
                 description={[
-                    "CapyCalm is a capybara-themed meditation app that I'm working on with my friends! I am focused on design, websites and some of the marketing content, as currently my PC is too s##t to run an Android emulator :(", 
+                    "", 
                 
-                    "This is my first experience with apps, however, I already know react, type script and other quirks of app/web development, so the jump hasn't been crazy."
+                    ""
                 ]}
                 
-                date="January 2026 - Present"
+                date="February 2026"
                 
                 bannerImage="/capycalm_banner.png"
 
                 roles={{
-                    "Frontend Developer": 20, 
-                    "Designer": 45, 
-                    "Marketing": 35
+                    "Vibe Coding": 10, 
+                    "Designing": 60, 
+                    "Coding": 20,
+                    "Animating": 10
                 }}
                 
                 stack={[
@@ -31,9 +32,8 @@ export default function Page() {
                 ]}
                 
                 links={{
-                    "Landing Page": "https://capycalmweb.appwrite.network/", 
-                    "Instagram": "https://www.instagram.com/capycalmapp/", 
-                    "Tiktok": "https://www.tiktok.com/@capycalmapp"
+                    "You're Already Here": "",
+                    "GitHub": "https://github.com/ToadBoyChen/new_portfolio",
                 }}
 
                 color="bg-yellow-200"

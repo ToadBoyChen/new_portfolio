@@ -16,10 +16,11 @@ export default function Page() {
                 
                 bannerImage="/capycalm/capycalm_banner.png"
 
-                roles={{
-                    "Frontend Developer": 20, 
+                roles={{ 
                     "Designer": 45, 
-                    "Marketing": 35
+                    "Marketing": 5,
+                    "Frontend WebDeveloper": 35,
+                    "Backend WebDeveloper": 15
                 }}
                 
                 stack={[

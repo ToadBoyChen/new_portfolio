@@ -15,6 +15,7 @@ export default function MenuEntry(props: MenuEntryProps) {
             <Link
                 href={props.link}
                 className="text-3xl font-black tracking-wide"
+                target="_blank"
             >
                 {props.text}
             </Link>

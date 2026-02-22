@@ -31,6 +31,7 @@ export default function Page() {
                 
                 links={{
                     "Website": "https://old-website-eight.vercel.app/",
+                    "GitHub": "https://github.com/ToadBoyChen/Old-Website"
                 }}
 
                 color="bg-green-200"
