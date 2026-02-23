@@ -17,7 +17,7 @@ export default function PortfolioMenu() {
                     />
                 </li>
             </ul>
-            <p className="text-sm border-b tracking-widest text-center mt-32">
+            {/* <p className="text-sm border-b tracking-widest text-center mt-32">
                 {"Websites"}
             </p>
             <ul>
@@ -29,7 +29,7 @@ export default function PortfolioMenu() {
                         link="/portfolio/inventory-game"
                     />
                 </li>
-            </ul>
+            </ul> */}
             <p className="text-sm border-b tracking-widest text-center mt-32">
                 {"Old Portfolios"}
             </p>
