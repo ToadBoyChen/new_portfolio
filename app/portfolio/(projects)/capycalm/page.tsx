@@ -27,8 +27,7 @@ export default function Page() {
                     "Figma", 
                     "Social Media", 
                     "React native", 
-                    "TailwindCSS", 
-                    "React spring"
+                    "TailwindCSS"
                 ]}
                 
                 links={{

@@ -24,9 +24,8 @@ export default function Page() {
                 }}
                 
                 stack={[
-                    "Figma", 
-                    "Social Media", 
-                    "React native", 
+                    "Figma",
+                    "Next.js", 
                     "TailwindCSS", 
                     "React spring"
                 ]}
