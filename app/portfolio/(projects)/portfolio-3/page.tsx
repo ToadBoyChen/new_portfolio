@@ -18,7 +18,7 @@ export default function Page() {
                 
                 date="June 2025"
                 
-                bannerImage="/capycalm_banner.png"
+                bannerImage="/portfolio-v3/portfolio-v3_banner.png"
 
                 roles={{
                     "Vibe Coding": 50,
@@ -46,7 +46,13 @@ export default function Page() {
                 color="bg-rose-300"
                 
                 content={{
-                    "Figure One: This is the landing page displaying an informational page explaining why mindfulness and meditation is good.": "/capycalm-1.png",
+                    "Figure One: the main section of the website. This is supposed to act as a character sheet, displaying the statistics, classes, guilds and groups, items and so fourth. ": "/portfolio-v3/portfolio-v3-1.png",
+                    "Figure Two: linking users to other platforms where I have a presence.": "/portfolio-v3/portfolio-v3-2.png",
+                    "Figure Three: another working contact form. ": "/portfolio-v3/portfolio-v3-3.png",
+                    "Figure Four: statistics section displaying character statistics, underneath the character sheet.": "/portfolio-v3/portfolio-v3-4.png",
+                    "Figure Five: The quest database. Data is stored in a flat file and each question has various properties. Each quest has a quest line, for example, 'The Scholar's Path' refers to my studies.": "/portfolio-v3/portfolio-v3-5.png",
+                    "Figure Six: an example of if you click on a specific quest line.": "/portfolio-v3/portfolio-v3-6.png",
+                    "Figure Seven: an example of if you click a specific quest.": "/portfolio-v3/portfolio-v3-7.png",
                 }}
             />
         </section>
