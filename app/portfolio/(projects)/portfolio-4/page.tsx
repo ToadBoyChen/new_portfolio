@@ -7,9 +7,11 @@ export default function Page() {
                 name="Portfolio V4"
                 
                 description={[
-                    "", 
+                    "This is my current portfolio and hopefully my last one for a while. My goal with this one was to NOT vibe code any of it, which has mostly held true.", 
                 
-                    ""
+                    "It aims to take a very simple structure but fill it with 'fun', as opposed to doing something I don't actually know how to code yet (easy trap to fall into when AIs exist).", 
+
+                    "Its by far, the most responsive, performant and thought about portfolio I have made - hopefully its somewhat impressive!"
                 ]}
                 
                 date="February 2026"
