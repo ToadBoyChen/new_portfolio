@@ -1,11 +1,12 @@
+import CustomDiv from "./CustomDiv";
 import MenuEntry from "./MenuEntry";
 
 export default function Menu() {
     return (
         <div className="w-sm sm:w-md md:w-xl lg:w-3xl h-[60vh] flex flex-col justify-center">
-            <p className="text-sm border-b tracking-widest mb-8 text-center">
-                {"Navigation"}
-            </p>
+            <CustomDiv
+                label={"Navigation"}
+            />
             <ul className="flex flex-col gap-8">
                 <li>
                     <MenuEntry

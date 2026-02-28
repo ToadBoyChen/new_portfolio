@@ -1,12 +1,13 @@
+import CustomDiv from "./CustomDiv";
 import PortfolioEntry from "./PortfolioEntry";
 
 
 export default function PortfolioMenu() {
     return (
         <div className="w-sm sm:w-md md:w-xl lg:w-3xl flex flex-col justify-center">
-            <p className="text-sm border-b tracking-widest text-center">
-                {"Apps"}
-            </p>
+            <CustomDiv 
+                label={"Apps"}            
+            />
             <ul className="flex flex-col gap-8">
                 <li>
                     <PortfolioEntry
@@ -30,9 +31,10 @@ export default function PortfolioMenu() {
                     />
                 </li>
             </ul> */}
-            <p className="text-sm border-b tracking-widest text-center mt-32">
-                {"Old Portfolios"}
-            </p>
+            <div className="mt-32"/>
+            <CustomDiv 
+                label={"Portfolios"}            
+            />
             <ul>
                 <li>
                     <PortfolioEntry

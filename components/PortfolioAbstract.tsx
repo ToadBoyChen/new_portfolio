@@ -6,6 +6,7 @@ import { animated, to, useSprings } from "@react-spring/web";
 import { useState, useRef, useCallback } from "react";
 import { useCursor } from "@/context/CursorContext";
 import PortfolioAbstractEntry from "./PortfolioAbstractEntry";
+import CustomDiv from "./CustomDiv";
 
 interface PortfolioAbstractProps {
     name: string;
@@ -131,10 +132,10 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </p>
             </div>
 
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl flex flex-col items-center">
-                <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
-                    {"Description"}
-                </p>
+            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl fle flex-col items-center mt-32">
+                <CustomDiv
+                    label={"Description"}
+                />
                 <div className={`${props.color} p-8 rounded-4xl`}>
                     {props.description.map((para, i) => (
                         <p
@@ -146,10 +147,10 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     ))}
                 </div>
 
-                <div className="w-full relative flex flex-col items-center">
-                    <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
-                        {`Content from ${props.name}`}
-                    </p>
+                <div className="w-full relative flex flex-col items-center mt-32">
+                    <CustomDiv
+                        label={"Images"}
+                    />
                     <div
                         className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y select-none"
 
@@ -208,10 +209,10 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     </div>
                 </div>
 
-                <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b  tracking-widest text-center mb-8">
-                        {"Roles"}
-                    </p>
+                <div className="w-full mt-32">
+                    <CustomDiv
+                        label={"Roles"}
+                    />
                     <ul className="flex flex-col gap-4 w-full">
                         {Object.entries(props.roles).map(([role, percent]) => (
                             <li
@@ -238,10 +239,10 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     </ul>
                 </div>
 
-                <div className="w-full">
-                    <p className="pt-16 w-full text-sm border-b  tracking-widest text-center mb-8">
-                        {"Tech + Skill Stack"}
-                    </p>
+                <div className="w-full mt-32">
+                    <CustomDiv
+                        label={"TechStack + Skills"}
+                    />
                     <ul className="grid grid-cols-3 gap-6">
                         {props.stack.map((tech, i) => (
                             <li
@@ -254,10 +255,10 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     </ul>
                 </div>
 
-                <div className="w-full pb-32">
-                    <p className="pt-16 w-full text-sm border-b tracking-widest text-center mb-8">
-                        {"Links"}
-                    </p>
+                <div className="w-full my-32">
+                    <CustomDiv
+                        label={"Links"}
+                    />
                     <ul className="flex flex-col gap-6">
                         {Object.entries(props.links).map(([label, url]) => (
                             <li
