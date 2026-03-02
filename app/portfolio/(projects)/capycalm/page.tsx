@@ -7,9 +7,11 @@ export default function Page() {
                 name="CapyCalm"
                 
                 description={[
-                    "CapyCalm is a gamified mindfulness ecosystem built around the serene nature of the capybara. Working within a small, agile team, I am spearheading the visual identity and web presence, ensuring the 'calm' ethos translates seamlessly from the brand marketing to the functional user interface.", 
+                    "CapyCalm is a gamified mindfulness app built around the calming presence of a capybara. Working within my friend, I developed the visual identity and web presence, ensuring the 'calm' ethos translates seamlessly from the brand marketing to the UI. We wanted the UX to calm the user but also create a sense of achievement.", 
                 
-                    "Transitioning from pure web to mobile-first design, I’ve leveraged my background in TypeScript and React to architect a responsive landing environment. By focusing on the web-based acquisition funnel and high-fidelity Figma prototyping, I’ve maintained a high development velocity despite local hardware constraints, ensuring the design system is production-ready for the React Native implementation."
+                    "Using Figma, I was able to rapidly design the identity, with a careful set of colours and bold borders. I was able to implement the design in our landing page.", 
+
+                    "I designed vector based graphics for the capybara which really creates a strong vibe that fits the name, 'CapyCalm'. This is a fantastic marketable point, however we chose to focus on teh startup vibe."
                 ]}
                 
                 date="Jan 2026 — Present"
@@ -24,15 +26,14 @@ export default function Page() {
                 }}
                 
                 stack={[
-                    "Figma", 
-                    "React Native", 
+                    "Figma",
                     "Next.js", 
                     "Tailwind CSS",
-                    "Appwrite"
+                    "Appwrite",
                 ]}
                 
                 links={{
-                    "Live Preview": "https://capycalmweb.appwrite.network/", 
+                    "Landing Page": "https://capycalmweb.appwrite.network/", 
                     "Instagram": "https://www.instagram.com/capycalmapp/", 
                     "TikTok": "https://www.tiktok.com/@capycalmapp"
                 }}
@@ -40,11 +41,10 @@ export default function Page() {
                 color="bg-indigo-400"
                 
                 content={{
-                    "Educational funnel designed to convert casual visitors into waitlist subscribers by highlighting the clinical benefits of mindfulness.": "/capycalm/capycalm-1.png", 
-                    "Interface design for the 'User Sanctuary'—mapping out account management and profile progression within Figma.": "/capycalm/capycalm-2.png", 
-                    "The core 'Habit Loop'—designing a streak-based home screen with a focus on future character-driven rewards and customisation.": "/capycalm/capycalm-3.png",
-                    "Interactive data collection layer. We use this onboarding flow to gather user intent, allowing for a personalized app experience post-launch.": "/capycalm/capycalm-4.png",
-                    "The acquisition finale. A streamlined lead-capture form integrated with a backend database to facilitate our Day-One launch notification.": "/capycalm/capycalm-5.png",
+                    "This is the onboarding page. It's designed to excite and entice, whilst also getting them to softly commit to the habit. Importantly, we only show one thing per page.": "/capycalm/Onboarding.png", 
+                    "The home page shows the user the daily streak, minutes meditated and various playlists they may want to interact with.": "/capycalm/Home.png", 
+                    "This is a screenshot from the landing page which displays an academic backing as to why the app works.": "/capycalm/Web.png",
+                    "This is the Figma design for the profile page. This lets the user manage subscriptions, change choices and permissions and various other things. It provides a solid base for an MVP.": "/capycalm/Profile.png",
                 }}
             />
         </section>
