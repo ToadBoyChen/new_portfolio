@@ -42,7 +42,8 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     });
 
     return (
-        <section className={`bg-stone-100 min-h-screen selection:bg-stone-900 selection:text-stone-50 flex flex-col items-center`}>
+        <section className="bg-stone-100 w-full flex flex-col items-center">
+            {/* Banner Section */}
             <div className="relative h-[80vh] min-h-150 w-full border-b border-stone-300 overflow-hidden flex items-end bg-stone-900">
                 <div className="absolute inset-0 z-0">
                     <Image
@@ -55,35 +56,27 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     />
                 </div>
 
-                <div className="absolute inset-6 md:inset-12 border border-white/10 pointer-events-none z-10 hidden md:block">
-                    <div className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-white/30" />
-                    <div className="absolute -top-2 -right-2 w-4 h-4 border-t border-r border-white/30" />
-                    <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b border-l border-white/30" />
-                    <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-white/30" />
-                </div>
-
                 <div className="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 pb-12 md:pb-16 pointer-events-none">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/20 pb-8">
-
                         <div className="text-white">
                             <animated.h1 style={headerSpring} className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter">
                                 {props.name}
                             </animated.h1>
                         </div>
-
                         <div className="flex flex-col gap-3 text-xs font-mono uppercase tracking-[0.2em] text-white/60 w-full md:w-auto md:min-w-62.5">
                             <div className="flex justify-between items-center text-white font-semibold text-right">
                                 {props.date}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-            <div className="w-sm sm:w-md md:w-xl lg:w-3xl">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 py-24 lg:py-40">
-                    <div className="lg:col-span-4 flex flex-col gap-24">
+            {/* Abstract Section - FIXED CENTERING */}
+            <div className="w-full max-w-screen-xl mx-auto px-6 md:px-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-0 py-24 lg:py-40">
+                    {/* Left Column */}
+                    <div className="lg:col-span-5 flex flex-col gap-24">
                         <div>
                             <CustomDiv label="Roles" align="left" />
                             <ul className="flex flex-col gap-8 mt-10">
@@ -107,12 +100,13 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-7 lg:col-start-6">
+                    {/* Right Column - Re-aligned to col-start-7 for balance */}
+                    <div className="lg:col-span-6 lg:col-start-7">
                         <CustomDiv label="Abstract" align="left" />
                         <div ref={descRef} className="mt-12 space-y-8">
                             {descTrail.map((style, i) => (
                                 <div key={i} className="overflow-hidden w-full pb-1">
-                                    <animated.p style={style} className="text-stone-700 text-2xl md:text-3xl leading-snug tracking-tight text-justify font-semibold">
+                                    <animated.p style={style} className="text-stone-700 text-2xl md:text-3xl leading-snug tracking-tight font-semibold break-words">
                                         {props.description[i]}
                                     </animated.p>
                                 </div>
@@ -122,6 +116,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
             </div>
 
+            {/* Visual Documentation - Already max-w-screen-2xl mx-auto */}
             <div className="w-full relative flex flex-col items-center py-24 md:py-40 bg-white border-y border-stone-200">
                 <div className="max-w-screen-2xl w-full px-6 md:px-12 mb-24 md:mb-32">
                     <CustomDiv label="Visual Documentation" align="center" />
@@ -142,26 +137,29 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
             </div>
 
-            <div className="w-sm sm:w-md md:w-xl lg:w-3xl py-32 md:py-48">
-                    <CustomDiv label="External Links" align="left" />
-                    <ul className="flex flex-col gap-6 mt-12">
-                        {linksEntries.map(([label, url]) => (
-                            <li
-                                key={label}
-                                {...getHoverProps("Go To", props.color)}
-                                className="group cursor-none"
-                            >
-                                <PortfolioAbstractEntry
-                                    link={url}
-                                    text={label}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            {/* External Links - FIXED CENTERING */}
+            <div className="w-full max-w-screen-xl mx-auto px-6 md:px-12 py-32 md:py-48">
+                <CustomDiv label="External Links" align="left" />
+                <ul className="flex flex-col gap-6 mt-12">
+                    {linksEntries.map(([label, url]) => (
+                        <li
+                            key={label}
+                            {...getHoverProps("Go To", props.color)}
+                            className="group cursor-none"
+                        >
+                            <PortfolioAbstractEntry
+                                link={url}
+                                text={label}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </section>
     );
 }
+
+// ... rest of your sub-components (TechStackItem, AnimatedFigure, etc.) stay the same
 
 const TechStackItem = React.memo(({ tech, index }: { tech: string, index: number }) => {
     return (
