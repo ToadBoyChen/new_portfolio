@@ -25,26 +25,52 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
     return (
         <section className="bg-stone-50 min-h-screen text-stone-900 selection:bg-stone-900 selection:text-stone-50">
-            {/* Hero Section */}
-            <div className="relative h-[70vh] min-h-[500px] w-full border-b border-stone-200 overflow-hidden flex items-center justify-center">
+            {/* Architectural Hero Section */}
+            <div className="relative h-[80vh] min-h-[600px] w-full border-b border-stone-300 overflow-hidden flex items-end bg-stone-900">
+                
+                {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
                         src={props.bannerImage}
                         alt={`${props.name} banner`}
-                        className="w-full h-full object-cover object-top opacity-90"
+                        // Darkened slightly for crisp white text contrast
+                        className="w-full h-full object-cover object-top opacity-60"
                     />
                 </div>
-                <div className="relative z-10 w-full text-center text-white mix-blend-difference text-7xl md:text-9xl font-black leading-none tracking-tighter">
-                    <IntroText
-                        text={props.name}
-                        direction="left"
-                        spacing={false}
-                    />
+
+                {/* Technical CAD-like Framing Overlay */}
+                <div className="absolute inset-6 md:inset-12 border border-white/10 pointer-events-none z-10 hidden md:block">
+                    {/* Corner Crosshairs */}
+                    <div className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-white/30" />
+                    <div className="absolute -top-2 -right-2 w-4 h-4 border-t border-r border-white/30" />
+                    <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b border-l border-white/30" />
+                    <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-white/30" />
                 </div>
-                <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
-                    <p className="tracking-widest bg-black/10 px-5 py-2.5 rounded-full backdrop-blur-md text-xs font-mono uppercase border border-white/10">
-                        <span className="text-white drop-shadow-sm">{props.date}</span>
-                    </p>
+
+                {/* Hero Content anchored to the bottom grid */}
+                <div className="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 pb-12 md:pb-16 pointer-events-none">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/20 pb-8">
+                        
+                        {/* Title Block */}
+                        <div className="text-white">
+                            <div className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter">
+                                <IntroText
+                                    text={props.name}
+                                    direction="left"
+                                    spacing={false}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Essential Meta Ledger */}
+                        <div className="flex flex-col gap-3 text-xs font-mono uppercase tracking-[0.2em] text-white/60 w-full md:w-auto md:min-w-[250px]">
+                            <div className="flex justify-between items-center border-b border-white/20 pb-2">
+                                <span>Timeline</span>
+                                <span className="text-white font-medium text-right">{props.date}</span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -110,7 +136,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </div>
             </div>
 
-            {/* Links Footer */}
+            {/* Links Footer - ONLY PLACE CURSOR IS ACTIVE */}
             <div className="max-w-4xl mx-auto px-6 w-full py-32 md:py-48">
                 <CustomDiv label="External Links" align="left" />
                 <ul className="flex flex-col gap-6 mt-12">
@@ -118,7 +144,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         <li
                             key={label}
                             {...getHoverProps("Go To", props.color)}
-                            className="group"
+                            className="group cursor-none"
                         >
                             <PortfolioAbstractEntry
                                 link={url}
@@ -134,7 +160,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
 // --- Sub-components ---
 
-// 1. Text Mask Reveal (Slides up from invisible clipping box)
+// 1. Text Mask Reveal
 function MaskReveal({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
     const [ref, inView] = useInView({ rootMargin: "-10% 0px", once: true });
     const spring = useSpring({
@@ -153,13 +179,14 @@ function MaskReveal({ children, delay = 0 }: { children: React.ReactNode, delay?
     );
 }
 
-// 2. Sequential Tech Stack List Items
+// 2. Sequential Tech Stack List Items (Cursor Removed)
 function TechStackItem({ tech, index }: { tech: string, index: number }) {
     const [ref, inView] = useInView({ rootMargin: "-5% 0px", once: true });
+    
     const spring = useSpring({
         from: { opacity: 0, transform: "translateX(-20px)" },
         to: { opacity: inView ? 1 : 0, transform: inView ? "translateX(0px)" : "translateX(-20px)" },
-        delay: index * 100, // Cascading stagger
+        delay: index * 100,
         config: { mass: 1, tension: 140, friction: 35, clamp: true },
     });
 
@@ -169,28 +196,26 @@ function TechStackItem({ tech, index }: { tech: string, index: number }) {
             style={spring} 
             className="flex items-center justify-between py-4 border-b border-stone-200 group"
         >
-            <span className="text-xs text-stone-400 font-mono tracking-widest">
+            <span className="text-xs text-stone-400 font-mono tracking-widest pointer-events-none">
                 {(index + 1).toString().padStart(2, '0')}
             </span>
-            <span className="text-stone-800 tracking-tight text-lg md:text-xl font-medium transition-transform group-hover:-translate-x-2">
+            <span className="text-stone-800 tracking-tight text-lg md:text-xl font-medium transition-transform group-hover:-translate-x-2 pointer-events-none">
                 {tech}
             </span>
         </animated.li>
     );
 }
 
-// 3. Technical Image Reveal (Clip Path + Parallax)
+// 3. Technical Image Reveal (Cursor Removed)
 function AnimatedFigure({ index, url, caption, name }: { index: number, url: string, caption: string, name: string }) {
     const [ref, inView] = useInView({ rootMargin: "-15% 0px", once: true });
     
-    // The "Shutter" effect: Mask reveals image from top to bottom
     const containerSpring = useSpring({
         from: { clipPath: "inset(0 0 100% 0)" },
         to: { clipPath: inView ? "inset(0 0 0% 0)" : "inset(0 0 100% 0)" },
         config: { mass: 1.2, tension: 90, friction: 40, clamp: true },
     });
 
-    // Inner Parallax: Image scales down and pushes up slightly against the unrolling mask
     const imageSpring = useSpring({
         from: { transform: "scale(1.08) translateY(5%)" },
         to: { transform: inView ? "scale(1) translateY(0%)" : "scale(1.08) translateY(5%)" },
@@ -202,12 +227,17 @@ function AnimatedFigure({ index, url, caption, name }: { index: number, url: str
     const figNumber = (index + 1).toString().padStart(2, '0');
     const layoutPhase = index % 3;
 
+    const containerClasses = "overflow-hidden bg-stone-100 ring-1 ring-stone-200/60 shadow-sm relative";
+
     return (
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 w-full items-center">
             
             {layoutPhase === 0 && (
                 <>
-                    <animated.div style={containerSpring} className="md:col-span-12 overflow-hidden bg-stone-100 ring-1 ring-stone-200/60 shadow-sm relative">
+                    <animated.div 
+                        style={containerSpring} 
+                        className={`md:col-span-12 ${containerClasses}`}
+                    >
                         <animated.img
                             style={imageSpring}
                             src={url}
@@ -223,7 +253,10 @@ function AnimatedFigure({ index, url, caption, name }: { index: number, url: str
 
             {layoutPhase === 1 && (
                 <>
-                    <animated.div style={containerSpring} className="md:col-span-7 overflow-hidden bg-stone-100 ring-1 ring-stone-200/60 shadow-sm relative">
+                    <animated.div 
+                        style={containerSpring} 
+                        className={`md:col-span-7 ${containerClasses}`}
+                    >
                         <animated.img
                             style={imageSpring}
                             src={url}
@@ -242,7 +275,10 @@ function AnimatedFigure({ index, url, caption, name }: { index: number, url: str
                     <div className="md:col-span-4 md:col-start-1 order-2 md:order-1">
                         <FigureCaption figNumber={figNumber} text={cleanCaption} align="left" inView={inView} />
                     </div>
-                    <animated.div style={containerSpring} className="md:col-span-7 md:col-start-6 overflow-hidden bg-stone-100 ring-1 ring-stone-200/60 shadow-sm relative order-1 md:order-2">
+                    <animated.div 
+                        style={containerSpring} 
+                        className={`md:col-span-7 md:col-start-6 order-1 md:order-2 ${containerClasses}`}
+                    >
                         <animated.img
                             style={imageSpring}
                             src={url}
@@ -259,7 +295,6 @@ function AnimatedFigure({ index, url, caption, name }: { index: number, url: str
 
 // 4. Plotter Line Caption
 function FigureCaption({ figNumber, text, align, inView }: { figNumber: string, text: string, align: 'left' | 'center', inView: boolean }) {
-    // Draws the horizontal rule above the caption
     const lineSpring = useSpring({
         from: { width: "0%" },
         to: { width: inView ? "100%" : "0%" },
@@ -267,7 +302,6 @@ function FigureCaption({ figNumber, text, align, inView }: { figNumber: string, 
         config: { mass: 1, tension: 120, friction: 35, clamp: true },
     });
 
-    // Snaps text into place
     const textSpring = useSpring({
         from: { opacity: 0, transform: "translateY(10px)" },
         to: { opacity: inView ? 1 : 0, transform: inView ? "translateY(0px)" : "translateY(10px)" },
@@ -298,7 +332,7 @@ function RoleBar({ role, percent, color }: { role: string; percent: number; colo
     const [ref, inView] = useInView({ once: true, rootMargin: "-10% 0px" });
     const spring = useSpring({
         width: inView ? `${percent}%` : "0%",
-        config: { mass: 1, tension: 120, friction: 40, clamp: true } // Removed bounce, plotter-like stop
+        config: { mass: 1, tension: 120, friction: 40, clamp: true }
     });
 
     return (
