@@ -20,7 +20,6 @@ interface PortfolioAbstractProps {
     color: string;
 }
 
-
 export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const width = 400;
     const gap = 40;
@@ -51,7 +50,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
         photoAlbumLength,
         (i) => ({
             opacity: i === currentImageIndex ? 1 : 0,
-            y: i === currentImageIndex ? 0 : 80,
+            y: i === currentImageIndex ? 0 : 20,
         }),
         [currentImageIndex]
     );
@@ -114,121 +113,143 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     };
 
     return (
-        <section>
-            <div className="relative border-b">
-                <div className="z-10 text-white mix-blend-difference text-7xl md:text-8xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+        <section className="bg-stone-50 min-h-screen text-stone-900 selection:bg-stone-900 selection:text-stone-50">
+            {/* Hero Section */}
+            <div className="relative h-[70vh] min-h-[500px] w-full border-b border-stone-200 overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src={props.bannerImage}
+                        alt={`${props.name} banner`}
+                        className="w-full h-full object-cover object-top opacity-90"
+                    />
+                </div>
+                <div className="relative z-10 w-full text-center text-white mix-blend-difference text-7xl md:text-9xl font-black leading-none tracking-tighter">
                     <IntroText
                         text={props.name}
                         direction="left"
                         spacing={false}
                     />
                 </div>
-                <img
-                    src={props.bannerImage}
-                    alt={`${props.name} banner`}
-                    className="w-full object-cover object-top max-h-100 lg:max-h-70"
-                />
-                <p className="absolute bottom-2 left-2 tracking-wider bg-black/10 px-4 py-2 rounded-4xl backdrop-blur-sm text-xs">
-                    <span className="text-white mix-blend-difference">{props.date}</span>
-                </p>
+                <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20">
+                    <p className="tracking-widest bg-black/10 px-5 py-2.5 rounded-full backdrop-blur-md text-xs font-mono uppercase border border-white/10">
+                        <span className="text-white drop-shadow-sm">{props.date}</span>
+                    </p>
+                </div>
             </div>
 
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl fle flex-col items-center">
+            {/* Main Content Grid */}
+            <div className="max-w-screen-2xl mx-auto px-6 md:px-12 w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 py-24 lg:py-40">
+                    
+                    {/* Left Column: Metadata (Roles & Stack) */}
+                    <div className="lg:col-span-4 flex flex-col gap-24">
+                        <div>
+                            <CustomDiv label="Roles" align="left" />
+                            <ul className="flex flex-col gap-8 mt-10">
+                                {Object.entries(props.roles).map(([role, percent]) => (
+                                    <RoleBar key={role} role={role} percent={percent} color={props.color} />
+                                ))}
+                            </ul>
+                        </div>
 
-                <div className="mt-32" />
-                <CustomDiv label="Abstract" align="left" />
+                        <div>
+                            <CustomDiv label="Technical Stack" align="left" />
+                            <ul className="flex flex-col gap-0 mt-8 border-t border-stone-200">
+                                {props.stack.map((tech, i) => (
+                                    <li key={i} className="flex items-center justify-between py-4 border-b border-stone-200 group">
+                                        <span className="text-xs text-stone-400 font-mono tracking-widest">
+                                            {(i + 1).toString().padStart(2, '0')}
+                                        </span>
+                                        <span className="text-stone-800 tracking-tight text-lg md:text-xl font-medium transition-transform group-hover:-translate-x-2">
+                                            {tech}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
 
-                <div className="mt-16" />
-                <CustomDiv label="Description" align="right" />
-                <div className="space-y-4">
-                    {props.description.map((para, i) => (
-                        <p key={i} className="text-stone-500 text-3xl leading-none text-justify">
-                            {para}
-                        </p>
+                    {/* Right Column: Narrative */}
+                    <div className="lg:col-span-7 lg:col-start-6">
+                        <CustomDiv label="Abstract" align="left" />
+                        <div className="mt-12 space-y-8">
+                            {props.description.map((para, i) => (
+                                <p key={i} className="text-stone-600 text-2xl md:text-3xl leading-snug tracking-tight text-justify font-light">
+                                    {para}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Immersive Gallery Section */}
+            <div className="w-full relative flex flex-col items-center py-24 bg-stone-100 overflow-hidden border-y border-stone-200">
+                <div className="max-w-screen-2xl w-full px-6 md:px-12 mb-16">
+                    <CustomDiv label="Visual Documentation" align="center" />
+                </div>
+                
+                <div
+                    className="relative w-screen h-[500px] flex justify-center items-center cursor-none touch-pan-y select-none"
+                    onClick={handleContainerClick}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
+                    {/* Invisible Hitboxes for Hover Cursor */}
+                    <div className="w-1/2 absolute left-0 top-0 h-full z-40" {...getHoverProps("Prev", props.color)} />
+                    <div className="w-1/2 absolute right-0 top-0 h-full z-40" {...getHoverProps("Next", props.color)} />
+                    
+                    {springs.map(({ x, scale, zIndex, opacity }, i) => (
+                        <animated.div
+                            key={i}
+                            className="absolute pointer-events-none"
+                            style={{
+                                zIndex,
+                                opacity,
+                                width: '350px',
+                                height: '350px',
+                                transform: to([x, scale], (x, s) => `translate3d(${x}px,0,0) scale(${s})`),
+                            }}
+                        >
+                            <img
+                                src={Object.entries(props.content)[i][1]}
+                                alt={`${props.name} documentation ${i}`}
+                                className="w-full h-full object-cover rounded-xl shadow-2xl"
+                            />
+                        </animated.div>
                     ))}
                 </div>
 
-                <div className="mt-16" />
-                <CustomDiv label="Roles" align="right" />
-                <ul className="flex flex-col gap-8 mt-10">
-                    {Object.entries(props.roles).map(([role, percent]) => (
-                        <RoleBar key={role} role={role} percent={percent} color={props.color} />
+                {/* Caption Container */}
+                <div className="relative w-full max-w-3xl px-6 h-32 mt-12 flex justify-center">
+                    {textSprings.map(({ opacity, y }, i) => (
+                        <animated.p
+                            key={i}
+                            className="absolute inset-x-0 mx-auto text-center tracking-tight text-stone-600 md:text-lg font-light leading-relaxed"
+                            style={{
+                                opacity,
+                                transform: y.to(v => `translate3d(0, ${v}px, 0)`),
+                            }}
+                        >
+                            <span className="block text-xs text-stone-400 font-mono mb-2 uppercase tracking-widest">
+                                Fig. {(i + 1).toString().padStart(2, '0')}
+                            </span>
+                            {Object.entries(props.content)[i][0].replace(/Figure [a-zA-Z]+:/, '')}
+                        </animated.p>
                     ))}
-                </ul>
-
-                <div className="mt-16" />
-                <CustomDiv label="Technical Stack" align="right" />
-                <ul className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-                    {props.stack.map((tech, i) => (
-                        <li key={i} className="flex items-baseline gap-2 border-b border-stone-200">
-                            <span className="text-xs text-stone-400">{(i + 1).toString()}</span>
-                            <span className="text-stone-800 tracking-tight text-xl md:text-2xl">{tech}</span>
-                        </li>
-                    ))}
-                </ul>
-
-                <div className="w-full relative flex flex-col items-center mt-32">
-                    <CustomDiv label={"Images"} align="left" />
-                    <div
-                        className="relative w-screen h-100 flex justify-center items-center cursor-none touch-pan-y select-none"
-
-                        onClick={handleContainerClick}
-                        onTouchStart={onTouchStart}
-                        onTouchMove={onTouchMove}
-                        onTouchEnd={onTouchEnd}
-                    >
-                        <div
-                            className="w-1/2 absolute left-0 top-0 h-full"
-                            {...getHoverProps("Prev", props.color)}
-                        />
-                        <div
-                            className="w-1/2 absolute right-0 top-0 h-full"
-                            {...getHoverProps("Next", props.color)}
-                        />
-                        {springs.map(({ x, scale, zIndex, opacity }, i) => (
-                            <animated.div
-                                key={i}
-                                className="absolute pointer-events-none"
-                                style={{
-                                    zIndex,
-                                    opacity,
-                                    width: '350px',
-                                    height: '350px',
-                                    transform: to([x, scale], (x, s) => `translate3d(${x}px,0,0) scale(${s})`),
-                                }}
-                            >
-                                <img
-                                    src={Object.entries(props.content)[i][1]}
-                                    alt={`${props.name} photo ${i}`}
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
-                            </animated.div>
-                        ))}
-                    </div>
-                    <div className="relative w-full flex justify-center">
-                        {textSprings.map(({ opacity, y }, i) => (
-                            <animated.p
-                                key={i}
-                                className="absolute tracking-tighter text-justify text-lg text-stone-800 md:text-xl"
-                                style={{
-                                    opacity,
-                                    transform: y.to(v => `translate3d(0, ${v}px, 0)`),
-                                }}
-                            >
-                                <span className="mr-2 text-xs text-stone-400">{i}</span>
-                                {Object.entries(props.content)[i][0]}
-                            </animated.p>
-                        ))}
-                    </div>
                 </div>
+            </div>
 
-                <div className="mt-64 mb-16" />
-                <ul className="gap-6 flex flex-col absolute w-[80vw] left-1/2 -translate-x-1/2">
-                    <CustomDiv label={"Links"} align="left" />
+            {/* Links Footer */}
+            <div className="max-w-4xl mx-auto px-6 w-full py-32 md:py-48">
+                <CustomDiv label="External Links" align="left" />
+                <ul className="flex flex-col gap-6 mt-12">
                     {Object.entries(props.links).map(([label, url]) => (
                         <li
                             key={label}
                             {...getHoverProps("Go To", props.color)}
+                            className="group"
                         >
                             <PortfolioAbstractEntry
                                 link={url}
@@ -252,14 +273,14 @@ function RoleBar({ role, percent, color }: { role: string; percent: number; colo
     return (
         <div ref={ref} className="w-full">
             <div className="flex justify-between items-end mb-3">
-                <p className="text-sm tracking-widest text-stone-600">
+                <p className="text-sm tracking-widest text-stone-800 uppercase font-medium">
                     {role}
                 </p>
-                <p className="text-md text-stone-600">
-                    {percent} <span className="text-xs text-stone-400">%</span>
+                <p className="text-sm font-mono text-stone-500 tabular-nums">
+                    {percent}%
                 </p>
             </div>
-            <div className="h-1 w-full bg-stone-200 relative">
+            <div className="h-[2px] w-full bg-stone-200 relative overflow-hidden">
                 <animated.div style={spring} className={`absolute top-0 left-0 h-full ${color}`} />
             </div>
         </div>
