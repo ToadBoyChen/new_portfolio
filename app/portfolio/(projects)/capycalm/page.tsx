@@ -7,43 +7,44 @@ export default function Page() {
                 name="CapyCalm"
                 
                 description={[
-                    "CapyCalm is a capybara-themed meditation app that I'm working on with my friends! I am focused on design, websites and some of the marketing content, as currently my PC is too s##t to run an Android emulator :(", 
+                    "CapyCalm is a gamified mindfulness ecosystem built around the serene nature of the capybara. Working within a small, agile team, I am spearheading the visual identity and web presence, ensuring the 'calm' ethos translates seamlessly from the brand marketing to the functional user interface.", 
                 
-                    "This is my first experience with apps, however, I already know react, type script and other quirks of app/web development, so the jump hasn't been crazy."
+                    "Transitioning from pure web to mobile-first design, I’ve leveraged my background in TypeScript and React to architect a responsive landing environment. By focusing on the web-based acquisition funnel and high-fidelity Figma prototyping, I’ve maintained a high development velocity despite local hardware constraints, ensuring the design system is production-ready for the React Native implementation."
                 ]}
                 
-                date="January 2026 - Present"
+                date="Jan 2026 — Present"
                 
                 bannerImage="/capycalm/capycalm_banner.png"
 
                 roles={{ 
-                    "Designer": 45, 
-                    "Marketing": 5,
-                    "Frontend WebDeveloper": 35,
-                    "Backend WebDeveloper": 15
+                    "UI/UX Design": 60, 
+                    "Brand Strategy": 10,
+                    "Marketing": 10,
+                    "Lead Web Development": 20
                 }}
                 
                 stack={[
                     "Figma", 
-                    "Social Media", 
-                    "React native", 
-                    "TailwindCSS"
+                    "React Native", 
+                    "Next.js", 
+                    "Tailwind CSS",
+                    "Appwrite"
                 ]}
                 
                 links={{
-                    "Landing Page": "https://capycalmweb.appwrite.network/", 
+                    "Live Preview": "https://capycalmweb.appwrite.network/", 
                     "Instagram": "https://www.instagram.com/capycalmapp/", 
-                    "Tiktok": "https://www.tiktok.com/@capycalmapp"
+                    "TikTok": "https://www.tiktok.com/@capycalmapp"
                 }}
 
-                color="bg-indigo-300"
+                color="bg-indigo-400"
                 
                 content={{
-                    "Figure One: This is the landing page displaying an informational page explaining why mindfulness and meditation is good.": "/capycalm/capycalm-1.png", 
-                    "Figure Two: Figma file showing the account management and profile page. This is not yet the app yet.": "/capycalm/capycalm-2.png", 
-                    "Figure Three: Figma file showing the home page which has a streaks page. We are aiming to add customisation to the capybara.": "/capycalm/capycalm-3.png",
-                    "Figure Four: This is the landing page where we obtain facts from the user. This increases engagement and gives us actionable data that we can use to customise the app experience.": "/capycalm/capycalm-4.png",
-                    "Figure Five: This is the landing page sign up form. This data is put into a database where we can contact the users to let them know when the app launches.": "/capycalm/capycalm-5.png",
+                    "Educational funnel designed to convert casual visitors into waitlist subscribers by highlighting the clinical benefits of mindfulness.": "/capycalm/capycalm-1.png", 
+                    "Interface design for the 'User Sanctuary'—mapping out account management and profile progression within Figma.": "/capycalm/capycalm-2.png", 
+                    "The core 'Habit Loop'—designing a streak-based home screen with a focus on future character-driven rewards and customisation.": "/capycalm/capycalm-3.png",
+                    "Interactive data collection layer. We use this onboarding flow to gather user intent, allowing for a personalized app experience post-launch.": "/capycalm/capycalm-4.png",
+                    "The acquisition finale. A streamlined lead-capture form integrated with a backend database to facilitate our Day-One launch notification.": "/capycalm/capycalm-5.png",
                 }}
             />
         </section>

@@ -45,22 +45,14 @@ export default function Contact() {
     };
 
     return (
-        /* FIX 1: Change 'flex items-center' to 'block' so mx-auto handles centering accurately */
         <main className="bg-stone-50 min-h-screen text-stone-900 selection:bg-stone-900 selection:text-stone-50 overflow-hidden w-full block">
-            
-            {/* Hero Section */}
             <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-12 pt-32 pb-16 md:pb-32 border-b border-stone-300">
-                <animated.h1 style={headerSpring} className="text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter break-words max-w-full uppercase">
+                <animated.h1 style={headerSpring} className="text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black leading-[0.9] tracking-tighter wrap-break-word max-w-full uppercase">
                     Get In Touch
                 </animated.h1>
             </div>
-
-            {/* Content Grid */}
             <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-12 py-24 lg:py-40">
-                {/* FIX 2: Re-balanced column spans (5 and 6) with a gutter at start-7 */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-0 items-start">
-                    
-                    {/* Left Column: Details & Socials */}
                     <div className="lg:col-span-5 flex flex-col gap-16">
                         <CustomDiv label="Directory" align="left" />
                         
@@ -77,7 +69,7 @@ export default function Contact() {
                                             download={link.download}
                                             target={link.href.startsWith('http') ? "_blank" : "_self"}
                                             rel={link.href.startsWith('http') ? "noopener noreferrer" : ""}
-                                            className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-stone-900 hover:text-stone-500 transition-colors break-words"
+                                            className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-stone-900 hover:text-stone-500 transition-colors wrap-break-word"
                                         >
                                             {link.value}
                                         </a>

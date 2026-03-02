@@ -43,17 +43,27 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
     return (
         <section className="bg-stone-100 w-full flex flex-col items-center">
-            {/* Banner Section */}
             <div className="relative h-[80vh] min-h-150 w-full border-b border-stone-300 overflow-hidden flex items-end bg-stone-900">
                 <div className="absolute inset-0 z-0">
-                    <Image
-                        src={props.bannerImage}
-                        alt={`${props.name} banner`}
-                        fill
-                        priority
-                        sizes="100vw"
-                        className="object-cover object-top opacity-60"
-                    />
+                    {props.bannerImage.endsWith('.mp4') || props.bannerImage.endsWith('.webm') ? (
+                        <video
+                            src={props.bannerImage}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover object-top opacity-60"
+                        />
+                    ) : (
+                        <Image
+                            src={props.bannerImage}
+                            alt={`${props.name} banner`}
+                            fill
+                            priority
+                            sizes="100vw"
+                            className="object-cover object-top opacity-60"
+                        />
+                    )}
                 </div>
 
                 <div className="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 pb-12 md:pb-16 pointer-events-none">
@@ -71,11 +81,8 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     </div>
                 </div>
             </div>
-
-            {/* Abstract Section - FIXED CENTERING */}
-            <div className="w-full max-w-screen-xl mx-auto px-6 md:px-12">
+            <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-0 py-24 lg:py-40">
-                    {/* Left Column */}
                     <div className="lg:col-span-5 flex flex-col gap-24">
                         <div>
                             <CustomDiv label="Roles" align="left" />
@@ -106,7 +113,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         <div ref={descRef} className="mt-12 space-y-8">
                             {descTrail.map((style, i) => (
                                 <div key={i} className="overflow-hidden w-full pb-1">
-                                    <animated.p style={style} className="text-stone-700 text-2xl md:text-3xl leading-snug tracking-tight font-semibold break-words">
+                                    <animated.p style={style} className="text-stone-700 text-2xl md:text-3xl leading-snug tracking-tight font-semibold wrap-break-word">
                                         {props.description[i]}
                                     </animated.p>
                                 </div>
@@ -136,9 +143,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                     </div>
                 </div>
             </div>
-
-            {/* External Links - FIXED CENTERING */}
-            <div className="w-full max-w-screen-xl mx-auto px-6 md:px-12 py-32 md:py-48">
+            <div className="w-full max-w-7xl mx-auto px-6 md:px-12 py-32 md:py-48">
                 <CustomDiv label="External Links" align="left" />
                 <ul className="flex flex-col gap-6 mt-12">
                     {linksEntries.map(([label, url]) => (
@@ -158,8 +163,6 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
         </section>
     );
 }
-
-// ... rest of your sub-components (TechStackItem, AnimatedFigure, etc.) stay the same
 
 const TechStackItem = React.memo(({ tech, index }: { tech: string, index: number }) => {
     return (
@@ -292,15 +295,15 @@ const FigureCaption = React.memo(({ figNumber, text, align, inView }: { figNumbe
     return (
         <div className={`flex flex-col gap-4 ${align === 'center' ? 'items-center text-center' : 'items-start text-left'}`}>
             <div className={`relative inline-block ${align === 'center' ? 'w-16' : 'w-full max-w-16'}`}>
-                <span className="text-[10px] text-stone-500 font-mono font-bold uppercase tracking-[0.2em] pb-2 block text-left">
-                    Fig. {figNumber}
-                </span>
+                <p className="text-xs md:text-sm pb-2 block text-left text-nowrap font-medium">
+                    Figure: <span className="text-xl text-stone-500">{figNumber}</span>
+                </p>
                 <animated.div
                     style={lineSpring}
                     className={`absolute bottom-0 h-px bg-stone-400 ${align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0'}`}
                 />
             </div>
-            <animated.p style={textSpring} className="text-stone-800 md:text-xl font-normal leading-relaxed tracking-tight">
+            <animated.p style={textSpring} className="text-stone-800 text-xl">
                 {text}
             </animated.p>
         </div>

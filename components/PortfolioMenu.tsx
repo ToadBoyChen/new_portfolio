@@ -31,7 +31,7 @@ export default function PortfolioMenu() {
                     />
                 </li>
             </ul> */}
-            <div className="mt-32"/>
+            {/* <div className="mt-32"/>
             <CustomDiv 
                 label={"Portfolios"}            
             />
@@ -68,7 +68,7 @@ export default function PortfolioMenu() {
                         link="/portfolio/portfolio-1"
                     />
                 </li>
-            </ul>
+            </ul> */}
         </div>
     );
 }
