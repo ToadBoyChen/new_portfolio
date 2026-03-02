@@ -25,7 +25,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${montserrat.className} antialiased`}
+                className={`${montserrat.className} antialiased  selection:bg-stone-900 selection:text-stone-50`}
             >
                 <CursorProvider>
                     <CustomCursor />

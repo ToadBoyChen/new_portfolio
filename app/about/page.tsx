@@ -22,10 +22,10 @@ export default function AboutMe() {
     }), [inView]);
 
     return (
-        <main className="bg-stone-50 min-h-screen text-stone-900 selection:bg-stone-900 selection:text-stone-50 overflow-hidden block">
+        <main className="bg-stone-50 min-h-screen text-stone-900 overflow-hidden block">
 
             <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-12 pt-32 pb-16">
-                <div className="w-full flex text-[10vh] md:text-[20vh] font-black leading-none text-stone-500">
+                <div className="w-full flex text-[10vh] sm:text-[14vh] md:text-[18vh] lg:text-[20vh] font-black leading-none">
                     <IntroText
                         text="About Me"
                         direction="right"
