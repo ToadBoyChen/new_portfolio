@@ -1,22 +1,23 @@
-"use client"
+"use client";
 
-import { useSpring, animated } from "@react-spring/web"
+import { useSpring, animated } from "@react-spring/web";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import Capy from "./svgs/Capy";
 
 const svgs: { [key: string]: React.ElementType } = {
     capy: Capy,
-}
+};
 
 interface PortfolioEntryProps {
-    text: string,
-    image: string,
-    colour: string,
-    link: string,
+    text: string;
+    image: string;
+    colour: string;
+    link: string;
 }
 
 export default function PortfolioEntry(props: PortfolioEntryProps) {
+    const router = useRouter();
     const peekAmount = "calc(100% - 15px)";
 
     const [{ svgY, bgY }, svgApi] = useSpring(() => ({
@@ -24,7 +25,6 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
         bgY: peekAmount,
     }));
 
-    // Calculates random rotations and x displacements based on the portfolio entry text
     let hash = 5381;
     for (let i = 0; i < props.text.length; i++) {
         hash = (hash * 33) ^ props.text.charCodeAt(i);
@@ -35,13 +35,17 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
     const rotateVal = ((randomSeed * 40) - 20).toFixed(2);
     const moveXVal = ((randomSeed * 60) - 20).toFixed(2);
 
-    const SvgComponent = svgs[props.image]
+    const SvgComponent = svgs[props.image];
+
+    const handleMouseEnter = () => {
+        svgApi.start({ svgY: "0%", bgY: "calc(0% - 0px)" });
+        router.prefetch(props.link);
+    };
 
     return (
         <div
             className="relative border-b-3 overflow-hidden my-4 hover:text-white hover:border-black transition-colors duration-300"
-
-            onMouseEnter={() => svgApi.start({ svgY: "0%", bgY: "calc(0% - 0px)" })}
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={() => svgApi.start({ svgY: "100%", bgY: peekAmount })}
         >
             <animated.div 
@@ -50,11 +54,9 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
                     y: bgY,
                 }}
             />
-            <div 
-                className="flex flex-row justify-around z-10 relative items-center"  
-            >
+            <div className="flex flex-row justify-around z-10 relative items-center">
                 <Link
-                    className=" px-8 py-4 text-xl md:text-3xl font-semibold tracking-wider w-2/3"
+                    className="px-8 py-4 text-xl md:text-3xl font-semibold tracking-wider w-2/3"
                     href={props.link}
                 >
                     {props.text}
