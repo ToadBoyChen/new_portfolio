@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import IntroText from "./IntoText";
-import { animated, to, useSprings } from "@react-spring/web";
+import { animated, to, useInView, useSpring, useSprings } from "@react-spring/web";
 import { useState, useRef, useCallback } from "react";
 import { useCursor } from "@/context/CursorContext";
 import PortfolioAbstractEntry from "./PortfolioAbstractEntry";
@@ -19,6 +19,7 @@ interface PortfolioAbstractProps {
     content: Record<string, string>;
     color: string;
 }
+
 
 export default function PortfolioAbstract(props: PortfolioAbstractProps) {
     const width = 400;
@@ -132,32 +133,46 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                 </p>
             </div>
 
-            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl fle flex-col items-center mt-32">
-                <CustomDiv
-                    label={"Description"}
-                />
-                <div className={`${props.color} p-8 rounded-4xl`}>
+            <div className="mx-auto max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl fle flex-col items-center">
+
+                <div className="mt-32" />
+                <CustomDiv label="Abstract" align="left" />
+
+                <div className="mt-16" />
+                <CustomDiv label="Description" align="right" />
+                <div className="space-y-4">
                     {props.description.map((para, i) => (
-                        <p
-                            key={i}
-                            className="leading-relaxed text-md md:text-lg text-white mix-blend-difference text-justify"
-                        >
-                            {para} <br /> <br />
+                        <p key={i} className="text-stone-500 text-3xl leading-none text-justify">
+                            {para}
                         </p>
                     ))}
                 </div>
 
+                <div className="mt-16" />
+                <CustomDiv label="Roles" align="right" />
+                <ul className="flex flex-col gap-8 mt-10">
+                    {Object.entries(props.roles).map(([role, percent]) => (
+                        <RoleBar key={role} role={role} percent={percent} color={props.color} />
+                    ))}
+                </ul>
+
+                <div className="mt-16" />
+                <CustomDiv label="Technical Stack" align="right" />
+                <ul className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+                    {props.stack.map((tech, i) => (
+                        <li key={i} className="flex items-baseline gap-2 border-b border-stone-200">
+                            <span className="text-xs text-stone-400">{(i + 1).toString()}</span>
+                            <span className="text-stone-800 tracking-tight text-xl md:text-2xl">{tech}</span>
+                        </li>
+                    ))}
+                </ul>
+
                 <div className="w-full relative flex flex-col items-center mt-32">
-                    <CustomDiv
-                        label={"Images"}
-                    />
+                    <CustomDiv label={"Images"} align="left" />
                     <div
-                        className="relative w-screen h-115 flex justify-center items-center cursor-none touch-pan-y select-none"
+                        className="relative w-screen h-100 flex justify-center items-center cursor-none touch-pan-y select-none"
 
-                        // Desktop Interaction
                         onClick={handleContainerClick}
-
-                        // Mobile Interaction
                         onTouchStart={onTouchStart}
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
@@ -173,7 +188,7 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                         {springs.map(({ x, scale, zIndex, opacity }, i) => (
                             <animated.div
                                 key={i}
-                                className="absolute shadow-2xl rounded-lg pointer-events-none"
+                                className="absolute pointer-events-none"
                                 style={{
                                     zIndex,
                                     opacity,
@@ -190,90 +205,63 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
                             </animated.div>
                         ))}
                     </div>
-                    <div className="mb-32 relative w-full flex justify-center">
+                    <div className="relative w-full flex justify-center">
                         {textSprings.map(({ opacity, y }, i) => (
                             <animated.p
                                 key={i}
-                                className="absolute text-sm tracking-wider leading-loose text-stone-600 text-justify"
+                                className="absolute tracking-tighter text-justify text-lg text-stone-800 md:text-xl"
                                 style={{
                                     opacity,
                                     transform: y.to(v => `translate3d(0, ${v}px, 0)`),
                                 }}
                             >
+                                <span className="mr-2 text-xs text-stone-400">{i}</span>
                                 {Object.entries(props.content)[i][0]}
                             </animated.p>
                         ))}
                     </div>
-                    <div className="w-full text-center mt-4 text-xs text-gray-400 uppercase tracking-widest md:hidden">
-                        Swipe to navigate
-                    </div>
                 </div>
 
-                <div className="w-full mt-32">
-                    <CustomDiv
-                        label={"Roles"}
-                    />
-                    <ul className="flex flex-col gap-4 w-full">
-                        {Object.entries(props.roles).map(([role, percent]) => (
-                            <li
-                                key={role}
-                                className="relative w-full h-12 border rounded overflow-hidden"
-                            >
-                                <div
-                                    className=
-                                    {`absolute top-0 left-0 h-full transition-all duration-1000 ease-out z-0 ${props.color}`}
-                                    style={{
-                                        width: `${percent}%`
-                                    }}
-                                />
-                                <div className="relative z-10 w-full h-full flex justify-between items-center px-4">
-                                    <p className="tracking-widest">
-                                        {role}
-                                    </p>
-                                    <p className="text-lg tracking-tighter">
-                                        {percent} <span className="text-xs">%</span>
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="w-full mt-32">
-                    <CustomDiv
-                        label={"TechStack + Skills"}
-                    />
-                    <ul className="grid grid-cols-3 gap-6">
-                        {props.stack.map((tech, i) => (
-                            <li
-                                key={i}
-                                className="tracking-tighter sm:tracking-tight md:tracking-normal lg:tracking-wider"
-                            >
-                                <span className="text-xs">{i + 1}.</span> {tech}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="w-full my-32">
-                    <CustomDiv
-                        label={"Links"}
-                    />
-                    <ul className="flex flex-col gap-6">
-                        {Object.entries(props.links).map(([label, url]) => (
-                            <li
-                                key={label}
-                                {...getHoverProps("Go To", props.color)}
-                            >
-                                <PortfolioAbstractEntry
-                                    link={url}
-                                    text={label}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <div className="mt-64 mb-16" />
+                <ul className="gap-6 flex flex-col absolute w-[80vw] left-1/2 -translate-x-1/2">
+                    <CustomDiv label={"Links"} align="left" />
+                    {Object.entries(props.links).map(([label, url]) => (
+                        <li
+                            key={label}
+                            {...getHoverProps("Go To", props.color)}
+                        >
+                            <PortfolioAbstractEntry
+                                link={url}
+                                text={label}
+                            />
+                        </li>
+                    ))}
+                </ul>
             </div>
         </section>
+    );
+}
+
+function RoleBar({ role, percent, color }: { role: string; percent: number; color: string }) {
+    const [ref, inView] = useInView({ once: true });
+    const spring = useSpring({
+        width: inView ? `${percent}%` : "0%",
+        config: { tension: 60, friction: 25 }
+    });
+
+    return (
+        <div ref={ref} className="w-full">
+            <div className="flex justify-between items-end mb-3">
+                <p className="text-sm tracking-widest text-stone-600">
+                    {role}
+                </p>
+                <p className="text-md text-stone-600">
+                    {percent} <span className="text-xs text-stone-400">%</span>
+                </p>
+            </div>
+            <div className="h-1 w-full bg-stone-200 relative">
+                <animated.div style={spring} className={`absolute top-0 left-0 h-full ${color}`} />
+            </div>
+        </div>
     );
 }
