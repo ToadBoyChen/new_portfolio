@@ -6,7 +6,7 @@ import { animated, useInView, useTrail } from "@react-spring/web";
 import { useMemo } from "react";
 
 const bioParagraphs = [
-    "I am a Mathematics student in London whose looking to break into the tech space and become a professional fighter.",
+    "I am a Mathematics student in London who is looking to break into the tech space and become a professional fighter.",
     "I am interested in web and app development, hence I am currently freelancing to build up a reputable portfolio.",
 ];
 

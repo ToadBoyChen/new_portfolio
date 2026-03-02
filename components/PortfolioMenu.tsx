@@ -18,57 +18,6 @@ export default function PortfolioMenu() {
                     />
                 </li>
             </ul>
-            {/* <p className="text-sm border-b tracking-widest text-center mt-32">
-                {"Websites"}
-            </p>
-            <ul>
-                <li>
-                    <PortfolioEntry
-                        text="Inventory Game"
-                        image="capy"
-                        colour="bg-violet-400"
-                        link="/portfolio/inventory-game"
-                    />
-                </li>
-            </ul> */}
-            {/* <div className="mt-32"/>
-            <CustomDiv 
-                label={"Portfolios"}            
-            />
-            <ul>
-                <li>
-                    <PortfolioEntry
-                        text="Portfolio V4"
-                        image="capy"
-                        colour="bg-yellow-400"
-                        link="/portfolio/portfolio-4"
-                    />
-                </li>
-                <li>
-                    <PortfolioEntry
-                        text="Portfolio V3"
-                        image="capy"
-                        colour="bg-rose-400"
-                        link="/portfolio/portfolio-3"
-                    />
-                </li>
-                <li>
-                    <PortfolioEntry
-                        text="Portfolio V2"
-                        image="capy"
-                        colour="bg-fuchsia-400"
-                        link="/portfolio/portfolio-2"
-                    />
-                </li>
-                <li>
-                    <PortfolioEntry
-                        text="Portfolio V1"
-                        image="capy"
-                        colour="bg-green-400"
-                        link="/portfolio/portfolio-1"
-                    />
-                </li>
-            </ul> */}
         </div>
     );
 }

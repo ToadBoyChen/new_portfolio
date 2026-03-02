@@ -19,7 +19,7 @@ export default function Home() {
                 <Menu />
             </div>
 
-            <div className="w-full text-[15vh] md:text-[20vh] font-black leading-none text-stone-200">
+            <div className="w-full mb-32 sm:mb-16 text-[15vh] md:text-[20vh] font-black leading-none text-stone-200">
                 <IntroText
                     text="CHEN"
                     direction="left"
