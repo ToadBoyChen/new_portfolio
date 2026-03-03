@@ -8,7 +8,7 @@ interface IntroTextProps {
     color?: string;
 }
 
-const GLYPHS = "ABCDEFGHJKMNPQRSTXYZ0123456789@#$%&";
+const GLYPHS = "abcdefghijklmnopqrstuvwxyz0123456789";
 
 export default function IntroText({ text, spacing, color = "text-stone-950" }: IntroTextProps) {
     const containerRef = useRef<HTMLDivElement>(null);

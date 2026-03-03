@@ -11,9 +11,10 @@ const svgs: { [key: string]: React.ElementType } = {
     capy: Capy,
 };
 
+// 1. Made 'image' optional by adding the '?'
 interface PortfolioEntryProps {
     text: string;
-    image: string;
+    image?: string; 
     colour: string;
     link: string;
 }
@@ -34,13 +35,11 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
         }
     );
 
-    // Safely get initial mobile state during hydration
     const getInitialMobile = () => 
         typeof window !== "undefined" ? window.innerWidth < 768 : false;
 
     const [isMobile, setIsMobile] = useState(getInitialMobile);
 
-    // Initialize the spring to the correct visual state instantly on the client
     const [{ svgY, bgY }, svgApi] = useSpring(() => ({
         svgY: getInitialMobile() ? "0%" : "100%",
         bgY: getInitialMobile() ? "calc(0% - 0px)" : peekAmount,
@@ -52,15 +51,12 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
             setIsMobile(mobile);
             
             if (mobile) {
-                // .set() forces the values instantly without touching the animation queue
                 svgApi.set({ svgY: "0%", bgY: "calc(0% - 0px)" });
             } else {
-                // .start() allows it to animate smoothly if the user manually resizes
                 svgApi.start({ svgY: "100%", bgY: peekAmount });
             }
         };
 
-        // Run once on mount to guarantee the component locks into place
         handleResize();
 
         window.addEventListener("resize", handleResize);
@@ -77,10 +73,10 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
     const rotateVal = ((randomSeed * 40) - 20).toFixed(2);
     const moveXVal = ((randomSeed * 60) - 20).toFixed(2);
 
-    const SvgComponent = svgs[props.image];
+    // 2. Check if props.image exists before assigning it to the component
+    const SvgComponent = props.image ? svgs[props.image] : null;
 
     const handleMouseEnter = () => {
-        // Direct window check is safer here to prevent touch-screen glitches
         if (window.innerWidth >= 768) {
             svgApi.start({ svgY: "0%", bgY: "calc(0% - 0px)" });
         }
@@ -108,7 +104,8 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
             />
             <div className="flex flex-row justify-between z-10 relative items-center pointer-events-none">
                 <Link
-                    className="px-8 py-4 text-xl md:text-3xl font-semibold tracking-wider w-2/3 flex items-center gap-4 pointer-events-auto"
+                    // 3. Conditionally changed width from 'w-2/3' to 'w-full' if there is no image
+                    className={`px-8 py-4 text-xl md:text-3xl font-semibold tracking-wider flex items-center gap-4 pointer-events-auto ${SvgComponent ? 'w-2/3' : 'w-full'}`}
                     href={props.link}
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -118,15 +115,18 @@ export default function PortfolioEntry(props: PortfolioEntryProps) {
                     </span>
                 </Link>
 
-                <animated.div
-                    className="translate-y-0 w-1/3 flex justify-end pr-8"
-                    style={{ y: svgY }}
-                >
-                    <SvgComponent
-                        className="w-20 h-20 md:w-25 md:h-25"
-                        style={{ transform: `rotate(${rotateVal}deg) translateX(${moveXVal}px)` }}
-                    />
-                </animated.div>
+                {/* 4. Only render the animated div and SVG if SvgComponent is valid */}
+                {SvgComponent && (
+                    <animated.div
+                        className="translate-y-0 w-1/3 flex justify-end pr-8"
+                        style={{ y: svgY }}
+                    >
+                        <SvgComponent
+                            className="w-20 h-20 md:w-25 md:h-25"
+                            style={{ transform: `rotate(${rotateVal}deg) translateX(${moveXVal}px)` }}
+                        />
+                    </animated.div>
+                )}
             </div>
         </animated.div>
     );

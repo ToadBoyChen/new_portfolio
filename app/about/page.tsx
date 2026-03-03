@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import IntroText from "@/components/IntoText";
-import { animated, useInView, useTrail, useSpring } from "@react-spring/web";
+import { animated, useInView, useTrail, useSpring, easings } from "@react-spring/web";
 import { useMemo, useEffect, useState } from "react";
 import CustomDiv from "@/components/CustomDiv";
 
@@ -60,10 +60,13 @@ export default function AboutMe() {
     }), [inView]);
 
     const marqueeStyles = useSpring({
-        from: { transform: "translateX(0%)" },
-        to: { transform: "translateX(-50%)" },
+        from: { transform: "translate3d(0%, 0, 0)" },
+        to: { transform: "translate3d(-50%, 0, 0)" },
         loop: true,
-        config: { duration: 20000 },
+        config: {
+            duration: 20000,
+            easing: easings.linear
+        },
     });
 
     const getStatus = (dateString: string) => {
@@ -111,10 +114,10 @@ export default function AboutMe() {
                         <div className="absolute bottom-0 left-0 w-full bg-stone-900/80 backdrop-blur-sm text-stone-50 py-3 overflow-hidden flex">
                             <animated.div style={marqueeStyles} className="flex whitespace-nowrap w-max">
                                 <span className="font-mono text-sm tracking-widest uppercase px-4">
-                                    Next.js • React • Freelance • Mathematics • Muay Thai • Jiu Jitsu •
+                                    Next.js • React • Freelance • TypeScript • WebDev • AppDev • FrontEnd • BackEnd • FullStack •
                                 </span>
                                 <span className="font-mono text-sm tracking-widest uppercase px-4">
-                                    Next.js • React • Freelance • Mathematics • Muay Thai • Jiu Jitsu •
+                                    Next.js • React • Freelance • TypeScript • WebDev • AppDev • FrontEnd • BackEnd • FullStack •
                                 </span>
                             </animated.div>
                         </div>

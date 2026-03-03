@@ -7,9 +7,9 @@ export default function Page() {
                 name="Portfolio V1"
                 
                 description={[
-                    "This is the first ever website I made! I created it to try and get a job at my university - in hindsight i'm quite embarrassed about submitting it (we all start somewhere).", 
+                    "This is the first ever website I created. I made it to try and get a job at my university, lets just say we all start somewhere.", 
                 
-                    "This website is pure vibecoding, using jQuery - which was for some reason a requirement for the job. I will never know why especially when we have other powerful frameworks."
+                    "This website is pure vibecoding, using jQuery."
                 ]}
                 
                 date="February 2024"
@@ -34,14 +34,11 @@ export default function Page() {
                     "GitHub": "https://github.com/ToadBoyChen/Old-Website"
                 }}
 
-                color="bg-green-200"
+                color="bg-purple-400"
                 
                 content={{
-                    "Figure One: this is the welcome page. There isn't much to say other than I thought the blur effect was awesome. It couldn't fix this either way.": "/portfolio-v1/portfolio-v1-1.png", 
-                    "Figure Two: footer - again don't have much to say.": "/portfolio-v1/portfolio-v1-2.png",
-                    "Figure Three: this was supposed to be the 'selling point' of this website. These are animated bubbles that expand to give facts - nothing is centred.": "/portfolio-v1/portfolio-v1-3.png",
-                    "Figure Four: some fact cards.": "/portfolio-v1/portfolio-v1-4.png",
-                    "Figure Five: this is a contact sheet (not a form). For some reason I thought it would be a good idea to include a phone number???": "/portfolio-v1/portfolio-v1-5.png",
+                    "This is the welcome page. There isn't much to say other than I thought the blur effect was awesome - it kind of it.": "/portfolio-v1/portfolio2.png", 
+                    "The supposed selling point of my website. These are pure, vibe coded bubbles which expand to show extra information. Not only don't they work well, but they are also a terrible UX.": "/portfolio-v1/portfolio1.png",
                 }}
             />
         </section>

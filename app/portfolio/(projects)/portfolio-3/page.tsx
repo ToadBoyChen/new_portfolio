@@ -43,16 +43,13 @@ export default function Page() {
                     "GitHub": "https://github.com/ToadBoyChen/portfolio"
                 }}
 
-                color="bg-rose-300"
+                color="bg-pink-400"
                 
                 content={{
-                    "Figure One: the main section of the website. This is supposed to act as a character sheet, displaying the statistics, classes, guilds and groups, items and so fourth. ": "/portfolio-v3/portfolio-v3-1.png",
-                    "Figure Two: linking users to other platforms where I have a presence.": "/portfolio-v3/portfolio-v3-2.png",
-                    "Figure Three: another working contact form. ": "/portfolio-v3/portfolio-v3-3.png",
-                    "Figure Four: statistics section displaying character statistics, underneath the character sheet.": "/portfolio-v3/portfolio-v3-4.png",
-                    "Figure Five: The quest database. Data is stored in a flat file and each question has various properties. Each quest has a quest line, for example, 'The Scholar's Path' refers to my studies.": "/portfolio-v3/portfolio-v3-5.png",
-                    "Figure Six: an example of if you click on a specific quest line.": "/portfolio-v3/portfolio-v3-6.png",
-                    "Figure Seven: an example of if you click a specific quest.": "/portfolio-v3/portfolio-v3-7.png",
+                    "This is the character sheet section. You can see all the items I have collected, encounters and the rarities + my character design. Its all animated - you should check it out.": "/portfolio-v3/portfolio1.png",
+                    "The users can access some of the socials here. You can see the pastel, cute glassmorphism effect.": "/portfolio-v3/portfolio2.png",
+                    "This is the quest modal, where the user interact with some of the stuff I have done in my life in a RPG-like way.": "/portfolio-v3/portfolio4.png",
+                    "A call to action to interact with my contact form.": "/portfolio-v3/portfolio3.png",
                 }}
             />
         </section>

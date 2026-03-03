@@ -80,7 +80,7 @@ export default function Contact() {
                                 return (
                                     <animated.li key={link.label} style={style} className="flex flex-col py-8 border-b border-stone-200 group">
                                         <span className="text-sm text-stone-500 tracking-widest mb-2">
-                                            {link.label}
+                                            <IntroText text={link.label} spacing={false} color="text-stone-500" />
                                         </span>
                                         <a
                                             href={link.href}
@@ -89,7 +89,7 @@ export default function Contact() {
                                             rel={link.href.startsWith('http') ? "noopener noreferrer" : ""}
                                             className="text-2xl md:text-3xl lg:text-4xl font-bold tracking text-stone-900 hover:text-stone-500 transition-colors wrap-break-word"
                                         >
-                                            <IntroText text={link.value} spacing={false}/>
+                                            {link.value}
                                         </a>
                                     </animated.li>
                                 );
@@ -113,22 +113,22 @@ export default function Contact() {
                                 // FORM UI
                                 <form onSubmit={handleSubmit} className="flex flex-col gap-12 w-full">
                                     <div className="flex flex-col gap-2 group">
-                                        <label htmlFor="name" className="text-sm text-stone-500 tracking-widest">
-                                            Name
+                                        <label htmlFor="name" className="text-sm tracking-widest">
+                                            <IntroText text={"Name"} spacing={false} color="text-stone-500" />
                                         </label>
                                         <input type="text" id="name" name="name" required className="w-full bg-transparent border-b border-t focus:bg-stone-300 py-4 text-xl md:text-3xl font-medium focus:outline-none transition-colors rounded-none" />
                                     </div>
 
                                     <div className="flex flex-col gap-2 group">
-                                        <label htmlFor="email" className="text-sm text-stone-500 tracking-widest">
-                                            Email
+                                        <label htmlFor="email" className="text-sm tracking-widest">
+                                            <IntroText text={"Email"} spacing={false} color="text-stone-500" />
                                         </label>
                                         <input type="email" id="email" name="email" required className="w-full bg-transparent border-b border-t focus:bg-stone-300 py-4 text-xl md:text-3xl font-medium focus:outline-none transition-colors rounded-none" />
                                     </div>
 
                                     <div className="flex flex-col gap-2 group">
-                                        <label htmlFor="message" className="text-sm text-stone-500 tracking-widest">
-                                            Message
+                                        <label htmlFor="message" className="text-sm tracking-widest">
+                                            <IntroText text={"Message"} spacing={false} color="text-stone-500" />
                                         </label>
                                         <textarea id="message" name="message" rows={4} required className="w-full bg-transparent border-b border-t focus:bg-stone-300 py-4 text-xl md:text-3xl font-medium focus:outline-none transition-colors resize-none rounded-none" />
                                     </div>

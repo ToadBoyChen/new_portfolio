@@ -38,7 +38,7 @@ export default function Page() {
                     "TikTok": "https://www.tiktok.com/@capycalmapp"
                 }}
 
-                color="bg-indigo-400"
+                color="bg-violet-400"
                 
                 content={{
                     "This is the onboarding page. It's designed to excite and entice, whilst also getting them to softly commit to the habit. Importantly, we only show one thing per page.": "/capycalm/Onboarding.png", 

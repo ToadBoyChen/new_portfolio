@@ -4,7 +4,7 @@ import PortfolioMenu from "@/components/PortfolioMenu";
 export default function Portfolio() {
     return (
         <main className="w-full flex flex-col items-center">
-            <div className="py-8 text-8xl md:text-9xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest">
+            <div className="py-8 text-7xl md:text-9xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest">
                 <IntroText
                     text="Portfolio"
                     spacing={false}
