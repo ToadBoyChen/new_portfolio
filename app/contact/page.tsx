@@ -59,11 +59,10 @@ export default function Contact() {
 
     return (
         <main className="bg-stone-50 min-h-screen text-stone-900 overflow-x-hidden w-full block">
-            <div className="w-full max-w-screen-2xl mx-auto px-6 md:px-12 pt-32 pb-16 md:pb-32 border-b border-stone-300">
-                <div className="w-full flex text-[10vh] sm:text-[14vh] md:text-[18vh] lg:text-[20vh] font-black leading-none">
+            <div className="w-full max-w-screen-2xl mx-auto px-6 md:px-12 pt-32 pb-16 md:pb-32 border-b border-stone-300 flex flex-col justify-center items-center">
+                <div className="text-[10vh] sm:text-[14vh] md:text-[18vh] lg:text-[20vh] font-black leading-none">
                     <IntroText
                         text="Contact"
-                        direction="right"
                         spacing={false}
                     />
 
@@ -90,7 +89,7 @@ export default function Contact() {
                                             rel={link.href.startsWith('http') ? "noopener noreferrer" : ""}
                                             className="text-2xl md:text-3xl lg:text-4xl font-bold tracking text-stone-900 hover:text-stone-500 transition-colors wrap-break-word"
                                         >
-                                            {link.value}
+                                            <IntroText text={link.value} spacing={false}/>
                                         </a>
                                     </animated.li>
                                 );

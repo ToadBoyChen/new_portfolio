@@ -1,39 +1,92 @@
 "use client";
 
-import { useTrail, animated } from "@react-spring/web"
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 
 interface IntroTextProps {
     text: string;
-    direction: "left" | "right";
     spacing: boolean;
+    color?: string;
 }
 
-export default function IntroText(props: IntroTextProps) {
-    const isLeft = props.direction === "left";
-    const text = isLeft ? props.text.split("").reverse() : props.text.split("");
-    const direction = isLeft ? 1000 : -1000;
-    const flexType = isLeft ? "flex-row-reverse" : "flex-row";
-    const space = props.spacing ? "gap-4 sm:gap-12 md:gap-20 lg:gap-42" : "gap-0";
+const GLYPHS = "ABCDEFGHJKMNPQRSTXYZ0123456789@#$%&";
 
-    const trail = useTrail(text.length, {
-        from: { x: direction },
-        to: { x: 0 },
-        config: { friction: 60, tension: 380, mass: 2 },
-    });
+export default function IntroText({ text, spacing, color = "text-stone-950" }: IntroTextProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    
+    const textArray = useMemo(() => text.split(""), [text]);
+
+    const [displayText, setDisplayText] = useState(textArray);
+    const [isScrambling, setIsScrambling] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+
+    const spaceGap = spacing ? "gap-4 sm:gap-12 md:gap-20 lg:gap-42" : "gap-0";
+
+    const scramble = useCallback(() => {
+        // Clear any existing interval so we don't get overlapping scrambles
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        
+        let iteration = 0;
+        setIsScrambling(true);
+
+        intervalRef.current = setInterval(() => {
+            setDisplayText(
+                // Map over textArray directly instead of prev to guarantee correct length
+                textArray.map((char, i) => {
+                    if (char === " ") return " ";
+                    if (i < Math.floor(iteration)) return char;
+                    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                })
+            );
+
+            if (iteration >= textArray.length) {
+                if (intervalRef.current) clearInterval(intervalRef.current);
+                setIsScrambling(false);
+            }
+            iteration += 0.35; 
+        }, 30);
+    }, [textArray]);
+
+    // Rescramble if the component is visible AND the text prop dynamically changes
+    useEffect(() => {
+        if (isVisible) {
+            scramble();
+        }
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [isVisible, scramble]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !isVisible) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (containerRef.current) observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, [isVisible]);
 
     return (
-        <div className="w-full pointer-events-none">
-            <h1 className={`${flexType} ${space} w-full flex justify-center`}>
-                {trail.map((style, index) => (
-                    <animated.span
-                        className=""
-                        style={style}
-                        key={index}
+        <div ref={containerRef} className="w-fit pointer-events-none font-mono min-h-[1em]">
+            <p className={`flex ${spaceGap} w-fit whitespace-pre`}>
+                {displayText.map((char, index) => (
+                    <span 
+                        key={index} 
+                        className={`
+                            shrink-0 transition-all duration-300
+                            ${!isVisible ? "opacity-0 scale-50" : "opacity-100 scale-100"}
+                            ${isScrambling && char !== textArray[index] ? "text-stone-400" : color} 
+                        `}
                     >
-                        {text[index]}
-                    </animated.span>
+                        {char === " " ? "\u00A0" : char}
+                    </span>
                 ))}
-            </h1>
+            </p>
         </div>
     );
 }

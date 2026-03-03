@@ -7,7 +7,6 @@ export default function Portfolio() {
             <div className="py-8 text-8xl md:text-9xl font-black leading-none justify-center tracking-normal sm:tracking-wide md:tracking-widest">
                 <IntroText
                     text="Portfolio"
-                    direction="right"
                     spacing={false}
                 />
             </div>

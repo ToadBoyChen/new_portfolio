@@ -7,6 +7,7 @@ import { animated, useInView, useSpring, useTrail } from "@react-spring/web";
 import { useCursor } from "@/context/CursorContext";
 import PortfolioAbstractEntry from "./PortfolioAbstractEntry";
 import CustomDiv from "./CustomDiv";
+import IntroText from "./IntoText";
 
 interface PortfolioAbstractProps {
     name: string;
@@ -171,7 +172,7 @@ const TechStackItem = React.memo(({ tech, index }: { tech: string, index: number
                 {(index + 1).toString()}
             </span>
             <span className="tracking-wider text-lg md:text-xl font-medium transition-transform group-hover:-translate-x-2 pointer-events-none">
-                {tech}
+                <IntroText text={tech} spacing={false}/>
             </span>
         </li>
     );
@@ -295,9 +296,9 @@ const FigureCaption = React.memo(({ figNumber, text, align, inView }: { figNumbe
     return (
         <div className={`flex flex-col gap-4 ${align === 'center' ? 'items-center text-center' : 'items-start text-left'}`}>
             <div className={`relative inline-block ${align === 'center' ? 'w-16' : 'w-full max-w-16'}`}>
-                <p className="text-xs md:text-sm pb-2 block text-left text-nowrap font-medium">
+                <h2 className="text-xs md:text-sm pb-2 block text-left text-nowrap font-medium">
                     Figure: <span className="text-xl text-stone-500">{figNumber}</span>
-                </p>
+                </h2>
                 <animated.div
                     style={lineSpring}
                     className={`absolute bottom-0 h-px bg-stone-400 ${align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0'}`}
