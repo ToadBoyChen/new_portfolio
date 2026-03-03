@@ -69,10 +69,8 @@ export default function PortfolioAbstract(props: PortfolioAbstractProps) {
 
                 <div className="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 pb-12 md:pb-16 pointer-events-none">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/20 pb-8">
-                        <div className="text-white">
-                            <animated.h1 style={headerSpring} className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tighter">
-                                {props.name}
-                            </animated.h1>
+                        <div className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-wide">
+                            <IntroText text={props.name} spacing={false} color="text-white" />
                         </div>
                         <div className="flex flex-col gap-3 text-xs font-mono uppercase tracking-[0.2em] text-white/60 w-full md:w-auto md:min-w-62.5">
                             <div className="flex justify-between items-center text-white font-semibold text-right">
@@ -172,7 +170,7 @@ const TechStackItem = React.memo(({ tech, index }: { tech: string, index: number
                 {(index + 1).toString()}
             </span>
             <span className="tracking-wider text-lg md:text-xl font-medium transition-transform group-hover:-translate-x-2 pointer-events-none">
-                <IntroText text={tech} spacing={false}/>
+                <IntroText text={tech} spacing={false} />
             </span>
         </li>
     );
