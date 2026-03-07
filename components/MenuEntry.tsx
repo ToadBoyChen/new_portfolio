@@ -13,9 +13,11 @@ export default function MenuEntry(props: MenuEntryProps) {
         x: 50,
         y: 10,
         config: { tension: 200, friction: 20 }
-    }))
+    }));
 
     const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (typeof window !== "undefined" && window.innerWidth < 768) return;
+
         const rect = e.currentTarget.getBoundingClientRect();
         
         const xPos = ((e.clientX - rect.left) / rect.width) * 100;
@@ -25,6 +27,8 @@ export default function MenuEntry(props: MenuEntryProps) {
     };
 
     const handleLeave = () => {
+        if (typeof window !== "undefined" && window.innerWidth < 768) return;
+        
         underlineApi.start({ x: 50, y: 10 });
     };
 

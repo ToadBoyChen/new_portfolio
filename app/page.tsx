@@ -5,7 +5,7 @@ export default function Home() {
 
     return (
         <main className="flex flex-col h-screen">
-            <div className=" flex flex-col justify-center items-center my-auto mx-8">
+            <div className="flex flex-col justify-center items-center my-auto mx-8">
                 <div className="text-[15vh] md:text-[20vh] font-black leading-none">
                     <IntroText
                         text="TOBY"
