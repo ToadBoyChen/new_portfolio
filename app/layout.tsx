@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans } from 'next/font/google';
 import TransitionWrapper from "@/components/TransitionWrapper";
 import "./globals.css";
+
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import CustomCursor from "@/components/CustomCursor";
 import { CursorProvider } from "@/context/CursorContext";
@@ -28,7 +30,10 @@ export default function RootLayout({
             <body
                 className={`${montserrat.className} antialiased  selection:bg-stone-900 selection:text-stone-50 mx-8`}
             >
+
                 <Analytics />
+                <SpeedInsights />
+
                 <CursorProvider>
                     <CustomCursor />
                     <TransitionWrapper>
